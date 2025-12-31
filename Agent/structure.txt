@@ -1,0 +1,5 @@
+Make A MVC format in this folder
+1.Model(database related)
+2.controller (js and php controller)
+3.view (all views)
+4.public(css,uploads)
