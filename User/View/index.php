@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EstateNexus - Home</title>
-  <link rel="stylesheet" href="style6.css" />
+  <link rel="stylesheet" href="../Public/css/style6.css" />
 </head>
 <body>
 
@@ -14,10 +14,10 @@
     </div>
 
     <nav class="nav-center">
-      <a href="#">Home</a>
-      <a href="#">Properties</a>
-      <a href="#">About Us</a>
-      <a href="#">Contact</a>
+      <a href="#index.php">Home</a>
+      <a href="#AvailableProperties.php">Properties</a>
+      <a href="#Aboutus.php">About Us</a>
+      <a href="#ContectUs.php">Contact</a>
     </nav>
 
     <div class="nav-right">
