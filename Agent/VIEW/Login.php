@@ -80,7 +80,7 @@
     <div class="container">
 
         <div class="image">
-            <img src="Image/homeImg.jpg" alt="Image">
+            <img src="Images/homeImg.jpg" alt="Image">
         </div>
 
         <div class="login">
