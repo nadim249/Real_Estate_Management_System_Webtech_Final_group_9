@@ -5,8 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Available Properties</title>
   <link rel="stylesheet" href="../Public/css/style2.css" />
+    <link rel="stylesheet" href="../Public/css/style6.css" />
+
 </head>
 <body>
+  <header class="nav">
+    <div class="nav-left">
+      <span class="logo">EstateNexus</span>
+    </div>
+
+    <nav class="nav-center">
+      <a href="dashboard.php">Home</a>
+      <a href="properties.php">Properties</a>
+      <a href="aboutus.php">About Us</a>
+      <a href="contact.php">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <a class="login" href="login.php">Log In</a>
+      <a class="signup" href="signup.php">Sign Up</a>
+    </div>
+  </header>
 
   <section class="section">
     <div class="heading">
@@ -44,7 +63,7 @@
             </div>
           </div>
 
-          <button class="btn">View Details</button>
+          <button class="btn"><a href="viewdetails.php">View Details</a></button>
         </div>
       </div>
 
@@ -77,7 +96,7 @@
             </div>
           </div>
 
-          <button class="btn">View Details</button>
+          <button class="btn"><a href="viewdetails.php">View Details</a></button>
         </div>
       </div>
 
@@ -109,7 +128,7 @@
             </div>
           </div>
 
-          <button class="btn">View Details</button>
+          <button class="btn"><a href="viewdetails.php">View Details</a></button>
         </div>
       </div>
 

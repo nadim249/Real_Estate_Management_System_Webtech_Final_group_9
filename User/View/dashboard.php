@@ -14,15 +14,15 @@
     </div>
 
     <nav class="nav-center">
-      <a href="#index.php">Home</a>
-      <a href="#AvailableProperties.php">Properties</a>
-      <a href="#Aboutus.php">About Us</a>
-      <a href="#ContectUs.php">Contact</a>
+      <a href="dashboard.php">Home</a>
+      <a href="properties.php">Properties</a>
+      <a href="aboutus.php">About Us</a>
+      <a href="contact.php">Contact</a>
     </nav>
 
     <div class="nav-right">
-      <a class="login" href="#">Log In</a>
-      <a class="signup" href="#">Sign Up</a>
+      <a class="login" href="login.php">Log In</a>
+      <a class="signup" href="signup.php">Sign Up</a>
     </div>
   </header>
 
