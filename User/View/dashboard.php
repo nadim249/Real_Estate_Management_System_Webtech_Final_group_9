@@ -35,7 +35,6 @@
       <div class="search-panel">
         <div class="tabs">
           <button class="tab active">Buy</button>
-          <button class="tab">Rent</button>
         </div>
 
         <div class="search-row">
