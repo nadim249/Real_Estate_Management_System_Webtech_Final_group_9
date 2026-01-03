@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approvals | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Dashboard</title>
 </head>
-<body id="page-dashboard">
-    <div class="sidebar">
+<body id="page-approvals">
+  <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
             <h2><a href="dashboard.php">
@@ -57,53 +56,25 @@
         </ul>
     </div>
     <main class="main-content">
-        <header>
-            <div class="header-title">
-                <h1>Dashboard Overview</h1>
-            </div>
-                <div class="user-wrapper">
-                    <i class="fa-duotone fa-solid fa-user user-img"></i>
-                    <div>
-                    <h4>Admin</h4>
-                    <small>Super Admin</small>
-                    </div>
-                </div>
-        </header>
-        <div class="cards-grid" id="stats-container">
-                    <div class="single-card">
-                        <div>
-                            <h1>54</h1>
-                                <span>Total properties</span>
-                        </div>
-                    <div>
-                        <span class="fa-solid fa-house" id="logo-card"></span>
-                    </div>
-                    </div>
-        </div>
-
+        <header><div class="header-title"><h1>Pending Approvals</h1></div></header>
         <div class="table-responsive">
-            <h3>Recent Listings</h3>
             <table>
                 <thead>
                     <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
+                        <td>ID</td>
+                        <td>Property</td>
+                        <td>Type</td>
                         <td>Agent</td>
+                        <td>Date</td>
+                        <td>Actions</td>
                     </tr>
                 </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
+                <tbody id="approvals-list">
 
                 </tbody>
             </table>
         </div>
-
     </main>
+
 </body>
 </html>

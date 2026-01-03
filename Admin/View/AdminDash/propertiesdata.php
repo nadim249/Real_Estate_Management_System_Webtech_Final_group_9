@@ -10,7 +10,8 @@
   <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
-            <h2>EstateMgr</h2>
+            <h2><a href="dashboard.php">
+            EstateMgr</h2>
         </div>
         <ul class="menu">
             <li>
