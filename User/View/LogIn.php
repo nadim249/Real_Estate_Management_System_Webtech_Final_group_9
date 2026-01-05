@@ -1,3 +1,24 @@
+<?php 
+session_start();
+
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+if($isLoggedIn){
+    Header("Location: dashboard.php");
+}
+$emailErr = $_SESSION["emailErr"] ?? "";
+$passwordErr = $_SESSION["passwordErr"] ?? "";
+$loginErr = $_SESSION["loginErr"] ?? "";
+
+$previousValues = $_SESSION["previousValues"] ?? [];
+
+
+unset($_SESSION["previousValues"]);
+unset($_SESSION["emailErr"]);
+unset($_SESSION["passwordErr"]);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +33,7 @@
     <div class="card">
       <h1 class="title">Log In</h1>
 
-      <form class="form">
+      <form class="form" method="post" onsubmit="" action="..\Controller\handleLoginValidation.php">
         <label class="label" for="email">Email Address</label>
         <input class="input" type="email" id="email" placeholder="example@email.com"/>
 
