@@ -8,13 +8,12 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
-
 include "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 
-$propertiesQuery = "SELECT * FROM agents ORDER BY created_at DESC";
-$propertiesResult = $connection->query($propertiesQuery);
+$agentsQuery = "SELECT * FROM agents ORDER BY created_at DESC";
+$agentsResult = $connection->query($agentsQuery);
 
 ?>
 
@@ -24,6 +23,9 @@ $propertiesResult = $connection->query($propertiesQuery);
     <meta charset="UTF-8">
     <title>Agents | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+    <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-agents">
@@ -88,7 +90,50 @@ $propertiesResult = $connection->query($propertiesQuery);
                     </div>
                 </div>
         </header>
-        <div class="agent-grid-container" id="agents-grid"></div>
+        <div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Full Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Commission Rate</td>
+                <td>Total Sales</td>
+                <td>Rating</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if($agentsResult && $agentsResult->num_rows > 0){
+                while($row = $agentsResult->fetch_assoc()){
+                    ?>
+                    <tr>
+                        <td><?php echo $row['agent_id']; ?></td>
+                        <td><?php echo $row['full_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['phone']; ?></td>
+                        <td><?php echo $row['commission_rate']; ?></td>
+                        <td><?php echo $row['total_sales']; ?></td>
+                        <td><?php echo $row['rating']; ?></td>
+
+
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a href="#" class="delete-btn">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo '<tr><td colspan="6">No agents found.</td></tr>';
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
     </main>
 
 </body>

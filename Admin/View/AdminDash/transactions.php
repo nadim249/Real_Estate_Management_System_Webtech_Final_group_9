@@ -8,6 +8,12 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$transactionsQuery = "SELECT * FROM transactions ORDER BY created_at DESC";
+$transactionsResult = $connection->query($transactionsQuery);
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +22,8 @@ $username = $_SESSION["username"] ??"";
     <meta charset="UTF-8">
     <title>Transactions | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+    <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-transactions">

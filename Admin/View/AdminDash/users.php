@@ -8,6 +8,12 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$buyersQuery = "SELECT * FROM buyers ORDER BY created_at DESC";
+$buyersResult = $connection->query($buyersQuery);
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +22,8 @@ $username = $_SESSION["username"] ??"";
     <meta charset="UTF-8">
     <title>Users | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+            <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-users">
@@ -77,15 +85,42 @@ $username = $_SESSION["username"] ??"";
                     </div>
                 </div>
     </header>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr><td>ID</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Role</td>
-                    <td>Joined</td><td>Action</td></tr></thead><tbody id="users-list"></tbody></table>
-        </div>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Full Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Created At</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if($buyersResult->num_rows > 0){
+                while($row = $buyersResult->fetch_assoc()){
+                    ?>
+                    <tr>
+                        <td><?php echo $row['user_id']; ?></td>
+                        <td><?php echo $row['full_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['phone']; ?></td>
+                        <td><?php echo $row['created_at']; ?></td>
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a href="#" class="delete-btn">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo '<tr><td colspan="6">No agents found.</td></tr>';
+            }
+            ?>
+        </tbody>
+    </table>
     </main>
 
 </body>
