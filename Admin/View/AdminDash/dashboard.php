@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
 if(!$isLoggedIn){
@@ -82,17 +83,55 @@ $username = $_SESSION["username"] ??"";
                     </div>
                 </div>
         </header>
+
         <div class="cards-grid" id="stats-container">
-                    <div class="single-card">
-                        <div>
-                            <h1>54</h1>
-                                <span>Total properties</span>
-                        </div>
-                    <div>
-                        <span class="fa-solid fa-house" id="logo-card"></span>
-                    </div>
-                    </div>
+
+    <!-- Total Users -->
+    <div class="single-card">
+        <div>
+            <h1><?php echo $totalUsers; ?></h1>
+            <span>Total Users</span>
         </div>
+        <div>
+            <span class="fa-solid fa-users" id="logo-card"></span>
+        </div>
+    </div>
+
+    <!-- Total Properties -->
+    <div class="single-card">
+        <div>
+            <h1><?php echo $totalProperties; ?></h1>
+            <span>Total Properties</span>
+        </div>
+        <div>
+            <span class="fa-solid fa-house" id="logo-card"></span>
+        </div>
+    </div>
+
+    <!-- Pending Approvals -->
+    <div class="single-card">
+        <div>
+            <h1><?php echo $pendingApprovals; ?></h1>
+            <span>Pending Approvals</span>
+        </div>
+        <div>
+            <span class="fa-solid fa-clock" id="logo-card"></span>
+        </div>
+    </div>
+
+    <!-- Total Sold -->
+    <div class="single-card">
+        <div>
+            <h1><?php echo $totalSoldThisMonth; ?></h1>
+            <span> Sold(This Month)</span>
+        </div>
+        <div>
+            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
+        </div>
+    </div>
+
+</div>
+
 
         <div class="table-responsive">
             <h3>Recent Listings</h3>

@@ -35,6 +35,22 @@ class DatabaseConnection{
         return $result;
     }
 
+    function fetchCount($connection, $tableName, $column = "*", $condition = "") {
+    $sql = "SELECT COUNT($column) as total FROM $tableName";
+    if ($condition != "") {
+        $sql .= " WHERE $condition";
+    }
+
+    $result = $connection->query($sql);
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0; // return 0 if query fails
+    }
+}
+
+
     function closeConnection($connection){
         $connection->close();
     }

@@ -1,9 +1,30 @@
+<?php
+session_start();
+
+$isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
+if(!$isLoggedIn){
+    Header("Location: login.php");
+}
+$email = $_SESSION["email"] ??"";
+$username = $_SESSION["username"] ??"";
+
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$propertiesQuery = "SELECT * FROM properties ORDER BY created_at DESC";
+$propertiesResult = $connection->query($propertiesQuery);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Properties | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+        <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-properties">
@@ -21,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="properties.php">
+                <a href="propertiesdata.php">
                     <i class="fa-solid fa-house"></i> 
                     <span>Properties</span>
                 </a>
@@ -51,14 +72,22 @@
                 </a>
             </li>
             <li class="logout-btn">
-                <a href="#"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+                <a href="../../Controller/logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
             </li>
         </ul>
     </div>
     <main class="main-content">
-        <header><div class="header-title"><h1>All Properties</h1></div></header>
+        <header><div class="header-title"><h1>All Properties</h1></div>
+                        <div class="user-wrapper">
+                    <i class="fa-duotone fa-solid fa-user user-img"></i>
+                    <div>
+                    <h4><?php echo htmlspecialchars($username); ?></h4>
+                    <small><?php echo htmlspecialchars($email); ?></small>
+                    </div>
+                </div>
+    </header>
         <div class="table-responsive">
-            <table>
+           <table>
                 <thead>
                     <tr>
                         <td>ID</td>
@@ -70,9 +99,31 @@
                         <td>Actions</td>
                     </tr>
                 </thead>
-                <tbody id="properties-list">
+            <tbody id="properties-list">
+            <?php
+            if($propertiesResult->num_rows > 0){
+                while($row = $propertiesResult->fetch_assoc()){
+                    ?>
+                    <tr>
+                        <td><?php echo $row['property_id']; ?></td>
+                        <td><?php echo $row['title']; ?></td>
+                        <td><?php echo $row['type']; ?></td>
+                        <td><?php echo $row['location']; ?></td>
+                        <td><?php echo number_format($row['price'], 2); ?></td>
+                        <td><?php echo $row['status']; ?></td>
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a href="#" class="delete-btn" >Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }else{
+                echo '<tr><td colspan="7">No properties found.</td></tr>';
+            }
+            ?>
+            </tbody>
 
-                </tbody>
             </table>
         </div>
     </main>

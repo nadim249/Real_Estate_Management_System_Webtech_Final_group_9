@@ -1,3 +1,23 @@
+<?php
+session_start();
+
+$isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
+if(!$isLoggedIn){
+    Header("Location: login.php");
+}
+$email = $_SESSION["email"] ??"";
+$username = $_SESSION["username"] ??"";
+
+
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$propertiesQuery = "SELECT * FROM agents ORDER BY created_at DESC";
+$propertiesResult = $connection->query($propertiesQuery);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,12 +71,23 @@
                 </a>
             </li>
             <li class="logout-btn">
-                <a href="#"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+                <a href="../../Controller/logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
             </li>
         </ul>
     </div>
     <main class="main-content">
-        <header><div class="header-title"><h1>Our Agents</h1></div></header>
+        <header>
+            <div class="header-title">
+                <h1>Our Agents</h1>
+            </div>
+                            <div class="user-wrapper">
+                    <i class="fa-duotone fa-solid fa-user user-img"></i>
+                    <div>
+                    <h4><?php echo htmlspecialchars($username); ?></h4>
+                    <small><?php echo htmlspecialchars($email); ?></small>
+                    </div>
+                </div>
+        </header>
         <div class="agent-grid-container" id="agents-grid"></div>
     </main>
 
