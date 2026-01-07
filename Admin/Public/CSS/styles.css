@@ -44,6 +44,8 @@ body {
   font-size: 14px;
 }
 
+
+
 .email-input,
 .pass-input,
 .signup-input {
@@ -78,6 +80,13 @@ body {
   font-weight: bold;
 }
 
+.form-group .errSpan {
+    color: #d93025;
+    background-color: #3498db;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+}
 /*Sidebar*/
 
 .sidebar {
@@ -207,3 +216,4 @@ td {
   color: #222;
   border-bottom: 1px solid #f0f0f0;
 }
+
