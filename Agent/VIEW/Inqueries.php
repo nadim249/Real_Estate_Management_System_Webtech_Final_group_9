@@ -6,7 +6,8 @@
     <title>Document</title>
 
 
-    <link rel="stylesheet" href="styleDash.css">
+   
+    <link rel="stylesheet" href="../Public/CSS/styleDash.css">
 </head>
 <body>
 
