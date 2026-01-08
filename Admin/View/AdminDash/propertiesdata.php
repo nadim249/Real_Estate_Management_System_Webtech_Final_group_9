@@ -92,10 +92,15 @@ $propertiesResult = $connection->query($propertiesQuery);
                     <tr>
                         <td>ID</td>
                         <td>Property</td>
+                        <td>description</td>
                         <td>Type</td>
                         <td>Location</td>
                         <td>Price</td>
+                        <td>Area(sq)</td>
+                        <td>Num of Bed Rooms</td>
+                        <td>Num of Bathroom Rooms</td>
                         <td>Status</td>
+                        <td>Is Sold</td>
                         <td>Actions</td>
                     </tr>
                 </thead>
@@ -107,10 +112,16 @@ $propertiesResult = $connection->query($propertiesQuery);
                     <tr>
                         <td><?php echo $row['property_id']; ?></td>
                         <td><?php echo $row['title']; ?></td>
+                        <td><?php echo $row['description']; ?></td>
                         <td><?php echo $row['type']; ?></td>
                         <td><?php echo $row['location']; ?></td>
                         <td><?php echo number_format($row['price'], 2); ?></td>
+                        <td><?php echo number_format($row['area_sqft'], 2); ?></td>
+                        <td><?php echo $row['num_bedrooms']; ?></td>
+                        <td><?php echo $row['num_bathrooms']; ?></td>
                         <td><?php echo $row['status']; ?></td>
+                        <td><?php echo $row['is_sold']; ?></td>
+
                         <td>
                             <a href="#" class="edit-btn">Edit</a>
                             <a href="#" class="delete-btn" >Delete</a>
