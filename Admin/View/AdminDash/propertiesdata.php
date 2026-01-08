@@ -86,6 +86,11 @@ $propertiesResult = $connection->query($propertiesQuery);
                     </div>
                 </div>
     </header>
+
+    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
+    <p style="color: green;">Property deleted successfully!</p>
+<?php endif; ?>
+
         <div class="table-responsive">
            <table>
                 <thead>
@@ -124,7 +129,7 @@ $propertiesResult = $connection->query($propertiesQuery);
 
                         <td>
                             <a href="#" class="edit-btn">Edit</a>
-                            <a href="#" class="delete-btn" >Delete</a>
+                            <a class="delete-btn" href="../../Controller/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
                         </td>
                     </tr>
                     <?php
