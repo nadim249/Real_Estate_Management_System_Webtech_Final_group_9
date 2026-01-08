@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
 if(!$isLoggedIn){
@@ -9,6 +8,12 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$agentsQuery = "SELECT * FROM agents ORDER BY created_at DESC";
+$agentsResult = $connection->query($agentsQuery);
 
 ?>
 
@@ -16,12 +21,14 @@ $username = $_SESSION["username"] ??"";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+    <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Dashboard</title>
 </head>
-<body id="page-dashboard">
+<body id="page-agents">
     <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
@@ -73,9 +80,9 @@ $username = $_SESSION["username"] ??"";
     <main class="main-content">
         <header>
             <div class="header-title">
-                <h1>Dashboard Overview</h1>
+                <h1>Our Agents</h1>
             </div>
-                <div class="user-wrapper">
+                            <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
                     <div>
                     <h4><?php echo htmlspecialchars($username); ?></h4>
@@ -83,79 +90,51 @@ $username = $_SESSION["username"] ??"";
                     </div>
                 </div>
         </header>
+        <div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Full Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Commission Rate</td>
+                <td>Total Sales</td>
+                <td>Rating</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if($agentsResult && $agentsResult->num_rows > 0){
+                while($row = $agentsResult->fetch_assoc()){
+                    ?>
+                    <tr>
+                        <td><?php echo $row['agent_id']; ?></td>
+                        <td><?php echo $row['full_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['phone']; ?></td>
+                        <td><?php echo $row['commission_rate']; ?></td>
+                        <td><?php echo $row['total_sales']; ?></td>
+                        <td><?php echo $row['rating']; ?></td>
 
-        <div class="cards-grid" id="stats-container">
 
-    <!-- Total Users -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalUsers; ?></h1>
-            <span>Total Users</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-users" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Properties -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalProperties; ?></h1>
-            <span>Total Properties</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-house" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Pending Approvals -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $pendingApprovals; ?></h1>
-            <span>Pending Approvals</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-clock" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Sold -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalSoldThisMonth; ?></h1>
-            <span> Sold(This Month)</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
-        </div>
-    </div>
-
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a href="#" class="delete-btn">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo '<tr><td colspan="6">No agents found.</td></tr>';
+            }
+            ?>
+        </tbody>
+    </table>
 </div>
 
-
-        <div class="table-responsive">
-            <h3>Recent Listings</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
-                        <td>Agent</td>
-                    </tr>
-                </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-
     </main>
+
 </body>
 </html>

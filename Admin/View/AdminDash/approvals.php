@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
 if(!$isLoggedIn){
@@ -9,20 +8,35 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$approvalsQuery = "
+    SELECT p.property_id, p.title, p.type, p.created_at,
+           a.full_name AS agent_name
+    FROM properties p
+    LEFT JOIN agents a ON p.agent_id = a.agent_id
+    WHERE p.status = 'Pending'
+    ORDER BY p.created_at DESC
+";
+
+$approvalsResult = $connection->query($approvalsQuery);
+
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approvals | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+        <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Dashboard</title>
 </head>
-<body id="page-dashboard">
-    <div class="sidebar">
+<body id="page-approvals">
+  <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
             <h2><a href="dashboard.php">
@@ -73,89 +87,61 @@ $username = $_SESSION["username"] ??"";
     <main class="main-content">
         <header>
             <div class="header-title">
-                <h1>Dashboard Overview</h1>
+            <h1>Pending Approvals</h1>
             </div>
-                <div class="user-wrapper">
+            <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
-                    <div>
+            <div>
                     <h4><?php echo htmlspecialchars($username); ?></h4>
                     <small><?php echo htmlspecialchars($email); ?></small>
-                    </div>
+            </div>
                 </div>
-        </header>
-
-        <div class="cards-grid" id="stats-container">
-
-    <!-- Total Users -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalUsers; ?></h1>
-            <span>Total Users</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-users" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Properties -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalProperties; ?></h1>
-            <span>Total Properties</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-house" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Pending Approvals -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $pendingApprovals; ?></h1>
-            <span>Pending Approvals</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-clock" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Sold -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalSoldThisMonth; ?></h1>
-            <span> Sold(This Month)</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
-        </div>
-    </div>
-
-</div>
-
-
+    </header>
         <div class="table-responsive">
-            <h3>Recent Listings</h3>
             <table>
                 <thead>
                     <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
+                        <td>ID</td>
+                        <td>Property</td>
+                        <td>Type</td>
                         <td>Agent</td>
+                        <td>Date</td>
+                        <td>Actions</td>
                     </tr>
                 </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
+<tbody id="approvals-list">
+<?php
+if($approvalsResult && $approvalsResult->num_rows > 0){
+    while($row = $approvalsResult->fetch_assoc()){
+        ?>
+        <tr>
+            <td><?php echo $row['property_id']; ?></td>
+            <td><?php echo htmlspecialchars($row['title']); ?></td>
+            <td><?php echo htmlspecialchars($row['type']); ?></td>
+            <td><?php echo htmlspecialchars($row['agent_name'] ?? 'N/A'); ?></td>
+            <td><?php echo date("Y-m-d", strtotime($row['created_at'])); ?></td>
+            <td>
+                <a href="../../Controller/approveProperty.php?id=<?php echo $row['property_id']; ?>" 
+                   class="edit-btn">Approve</a>
 
-                </tbody>
+                <a href="../../Controller/rejectProperty.php?id=<?php echo $row['property_id']; ?>" 
+                   class="delete-btn"
+                   onclick="return confirm('Reject this property?');">
+                   Reject
+                </a>
+            </td>
+        </tr>
+        <?php
+    }
+} else {
+    echo '<tr><td colspan="6">No pending approvals found.</td></tr>';
+}
+?>
+</tbody>
+
             </table>
         </div>
-
     </main>
+
 </body>
 </html>

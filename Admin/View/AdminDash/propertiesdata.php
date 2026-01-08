@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
 if(!$isLoggedIn){
@@ -9,6 +8,12 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$propertiesQuery = "SELECT * FROM properties ORDER BY created_at DESC";
+$propertiesResult = $connection->query($propertiesQuery);
 
 ?>
 
@@ -16,13 +21,14 @@ $username = $_SESSION["username"] ??"";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+        <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Dashboard</title>
 </head>
-<body id="page-dashboard">
-    <div class="sidebar">
+<body id="page-properties">
+  <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
             <h2><a href="dashboard.php">
@@ -71,91 +77,72 @@ $username = $_SESSION["username"] ??"";
         </ul>
     </div>
     <main class="main-content">
-        <header>
-            <div class="header-title">
-                <h1>Dashboard Overview</h1>
-            </div>
-                <div class="user-wrapper">
+        <header><div class="header-title"><h1>All Properties</h1></div>
+                        <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
                     <div>
                     <h4><?php echo htmlspecialchars($username); ?></h4>
                     <small><?php echo htmlspecialchars($email); ?></small>
                     </div>
                 </div>
-        </header>
+    </header>
 
-        <div class="cards-grid" id="stats-container">
-
-    <!-- Total Users -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalUsers; ?></h1>
-            <span>Total Users</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-users" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Properties -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalProperties; ?></h1>
-            <span>Total Properties</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-house" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Pending Approvals -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $pendingApprovals; ?></h1>
-            <span>Pending Approvals</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-clock" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Sold -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalSoldThisMonth; ?></h1>
-            <span> Sold(This Month)</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
-        </div>
-    </div>
-
-</div>
-
+    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
+    <p style="color: green;">Property deleted successfully!</p>
+<?php endif; ?>
 
         <div class="table-responsive">
-            <h3>Recent Listings</h3>
-            <table>
+           <table>
                 <thead>
                     <tr>
-                        <td>Property Title</td>
+                        <td>ID</td>
+                        <td>Property</td>
+                        <td>description</td>
+                        <td>Type</td>
+                        <td>Location</td>
                         <td>Price</td>
+                        <td>Area(sq)</td>
+                        <td>Num of Bed Rooms</td>
+                        <td>Num of Bathroom Rooms</td>
                         <td>Status</td>
-                        <td>Agent</td>
+                        <td>Is Sold</td>
+                        <td>Actions</td>
                     </tr>
                 </thead>
-                <tbody id="property-body">
+            <tbody id="properties-list">
+            <?php
+            if($propertiesResult->num_rows > 0){
+                while($row = $propertiesResult->fetch_assoc()){
+                    ?>
                     <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
+                        <td><?php echo $row['property_id']; ?></td>
+                        <td><?php echo $row['title']; ?></td>
+                        <td><?php echo $row['description']; ?></td>
+                        <td><?php echo $row['type']; ?></td>
+                        <td><?php echo $row['location']; ?></td>
+                        <td><?php echo number_format($row['price'], 2); ?></td>
+                        <td><?php echo number_format($row['area_sqft'], 2); ?></td>
+                        <td><?php echo $row['num_bedrooms']; ?></td>
+                        <td><?php echo $row['num_bathrooms']; ?></td>
+                        <td><?php echo $row['status']; ?></td>
+                        <td><?php echo $row['is_sold']; ?></td>
 
-                </tbody>
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a class="delete-btn" href="../../Controller/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }else{
+                echo '<tr><td colspan="7">No properties found.</td></tr>';
+            }
+            ?>
+            </tbody>
+
             </table>
         </div>
-
     </main>
+
 </body>
 </html>

@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
 if(!$isLoggedIn){
@@ -9,19 +8,25 @@ if(!$isLoggedIn){
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 
+include "../../Model/DatabaseConnection.php";
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+
+$buyersQuery = "SELECT * FROM buyers ORDER BY created_at DESC";
+$buyersResult = $connection->query($buyersQuery);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+            <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Dashboard</title>
 </head>
-<body id="page-dashboard">
+<body id="page-users">
     <div class="sidebar">
         <div class="logo">
             <i class="fa-solid fa-building fa-2x"></i>
@@ -71,91 +76,52 @@ $username = $_SESSION["username"] ??"";
         </ul>
     </div>
     <main class="main-content">
-        <header>
-            <div class="header-title">
-                <h1>Dashboard Overview</h1>
-            </div>
-                <div class="user-wrapper">
+        <header><div class="header-title"><h1>Registered Users</h1></div>
+                        <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
                     <div>
                     <h4><?php echo htmlspecialchars($username); ?></h4>
                     <small><?php echo htmlspecialchars($email); ?></small>
                     </div>
                 </div>
-        </header>
-
-        <div class="cards-grid" id="stats-container">
-
-    <!-- Total Users -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalUsers; ?></h1>
-            <span>Total Users</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-users" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Properties -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalProperties; ?></h1>
-            <span>Total Properties</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-house" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Pending Approvals -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $pendingApprovals; ?></h1>
-            <span>Pending Approvals</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-clock" id="logo-card"></span>
-        </div>
-    </div>
-
-    <!-- Total Sold -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalSoldThisMonth; ?></h1>
-            <span> Sold(This Month)</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
-        </div>
-    </div>
-
-</div>
-
-
-        <div class="table-responsive">
-            <h3>Recent Listings</h3>
-            <table>
-                <thead>
+    </header>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Full Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Created At</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if($buyersResult->num_rows > 0){
+                while($row = $buyersResult->fetch_assoc()){
+                    ?>
                     <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
-                        <td>Agent</td>
+                        <td><?php echo $row['user_id']; ?></td>
+                        <td><?php echo $row['full_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['phone']; ?></td>
+                        <td><?php echo $row['created_at']; ?></td>
+                        <td>
+                            <a href="#" class="edit-btn">Edit</a>
+                            <a href="#" class="delete-btn">Delete</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-
+                    <?php
+                }
+            } else {
+                echo '<tr><td colspan="6">No agents found.</td></tr>';
+            }
+            ?>
+        </tbody>
+    </table>
     </main>
+
 </body>
 </html>
