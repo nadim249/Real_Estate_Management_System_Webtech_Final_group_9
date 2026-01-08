@@ -52,8 +52,8 @@ unset($_SESSION["loginErr"]);
 
             <div class="form-group">
                 <label>Email Address</label>
-                <input type="email" class="signup-input" placeholder="nabil@example.com" name="email">
-                <span class="errSpan" style="color:red;"><?php  echo $emailErr; ?></span>
+                <input type="email" class="signup-input" placeholder="nabil@example.com" id="email" name="email" onkeyup="findExistingEmail()" value="<?php echo $previousValues["email"] ?? "" ?>" >
+                <span class="errSpan" style="color:red;" id="ajaxResponse"><?php  echo $emailErr; ?></span>
             </div>
             
             <div class="form-group">
@@ -77,5 +77,8 @@ unset($_SESSION["loginErr"]);
             <p>Already have an account? <a href="login.php">Login</a></p>
         </div>
     </div>
+
+        <script src="../../Controller/JS/checkmail.js"></script>
+
 </body>
 </html>
