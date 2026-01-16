@@ -4,7 +4,7 @@ include "../../../Model/DatabaseConnection.php";
 
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 if (!$isLoggedIn) {
-    header("Location: ../login.php");
+    header("Location: ../../Auth/login.php");
     exit;
 }
 

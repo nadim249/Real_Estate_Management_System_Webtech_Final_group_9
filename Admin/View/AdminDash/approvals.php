@@ -48,10 +48,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
             <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
-            <div>
-                    <h4><?php echo htmlspecialchars($username); ?></h4>
-                    <small><?php echo htmlspecialchars($email); ?></small>
-            </div>
+    <div>
+        <h4><?php echo htmlspecialchars($username); ?>
+        <a href="Edit/editProfile.php" class="edit-profile-btn">
+        <i class="fa-solid fa-pen"></i>
+        </a>
+        </h4>
+        <small><?php echo htmlspecialchars($email); ?></small>
+    </div>
                 </div>
     </header>
         <div class="table-responsive">

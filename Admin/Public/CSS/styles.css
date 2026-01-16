@@ -128,9 +128,10 @@ body {
   font-size: 18pxrem;
   gap: 16px;
 }
-.sidebar a:hover{
- color: #1abc9c; 
+.sidebar a:not(.no-hover):hover{
+    color: #ff6b6b;
 }
+
 
 .logout-btn {
   margin: 1.5rem 0;
@@ -140,12 +141,12 @@ body {
 
 .logout-btn:hover{
   background-color: #f44336;
-  color: aliceblue;
   border-radius: 5px;
 }
 .menu a.active {
     background-color: #3498db;
     border-radius: 5px;
+    padding: 5px;
 }
 
 /* main content */
@@ -201,6 +202,25 @@ header {
   font-size: 32px;
   color: #5b6168;
 }
+
+.edit-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;    
+    height: 32px;
+    background-color: #5cb1ea;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+
+}
+
+.edit-profile-btn:hover {
+    background-color: #2980b9;
+}
+
 
 /* Tables */
 .table-responsive {

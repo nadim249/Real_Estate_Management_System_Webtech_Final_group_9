@@ -39,7 +39,7 @@ Header("Location: ../View/Auth/login.php");
     $result = $db->signin($connection, "admins", $email, $password);
     if($result->num_rows > 0){
         $user = $result->fetch_assoc();
-       
+        $_SESSION["admin_id"]=$user['admin_id'];
         $_SESSION["email"] = $email;
         $_SESSION["isLoggedIn"] = true;
         $_SESSION["username"] = $user['username'];

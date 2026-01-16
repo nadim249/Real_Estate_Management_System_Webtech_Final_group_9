@@ -45,7 +45,7 @@
             </a>
         </li>
         <li class="logout-btn">
-            <a href="../../Controller/logout.php">
+            <a href="../../Controller/logout.php" class="no-hover">
                 <i class="fa-solid fa-right-from-bracket"></i> 
                 <span>Logout</span>
             </a>
