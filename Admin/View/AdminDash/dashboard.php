@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../../Model/DatabaseConnection.php";
 include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
@@ -8,6 +9,19 @@ if(!$isLoggedIn){
 }
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
+
+
+
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+$sql = "SELECT p.title, p.price, p.status, a.full_name AS agent_name
+        FROM properties p
+        LEFT JOIN agents a ON p.agent_id = a.agent_id
+        ORDER BY p.created_at DESC
+        LIMIT 5";
+
+$recentProperties = $conn->query($sql);
 
 
 ?>
@@ -22,66 +36,28 @@ $username = $_SESSION["username"] ??"";
     <title>Dashboard</title>
 </head>
 <body id="page-dashboard">
-    <div class="sidebar">
-        <div class="logo">
-            <i class="fa-solid fa-building fa-2x"></i>
-            <h2><a href="dashboard.php">
-            EstateMgr</h2>
-        </div>
-        <ul class="menu">
-            <li>
-                <a href="dashboard.php">
-                    <i class="fa-solid fa-gauge"></i> 
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="propertiesdata.php">
-                    <i class="fa-solid fa-house"></i> 
-                    <span>Properties</span>
-                </a>
-            </li>
-            <li>
-                <a href="approvals.php">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                     <span>Approvals</span>
-                    </a>
-            </li>
-            <li>
-                <a href="transactions.php">
-                    <i class="fa-solid fa-money-bill-wave"></i> 
-                    <span>Transactions</span>
-                </a>
-            </li>
-            <li>
-                <a href="agents.php">
-                    <i class="fa-solid fa-user-tie"></i> 
-                    <span>Agents</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.php">
-                    <i class="fa-solid fa-users"></i> 
-                    <span>Users</span>
-                </a>
-            </li>
-            <li class="logout-btn">
-                <a href="../../Controller/logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
-            </li>
-        </ul>
-    </div>
+    <?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
+    <?php include '../includes/sidebar.php'; ?>
+
     <main class="main-content">
         <header>
             <div class="header-title">
                 <h1>Dashboard Overview</h1>
             </div>
-                <div class="user-wrapper">
-                    <i class="fa-duotone fa-solid fa-user user-img"></i>
-                    <div>
-                    <h4><?php echo htmlspecialchars($username); ?></h4>
-                    <small><?php echo htmlspecialchars($email); ?></small>
-                    </div>
-                </div>
+
+            <div class="user-wrapper">
+    <i class="fa-duotone fa-solid fa-user user-img"></i>
+    <div>
+        <h4><?php echo htmlspecialchars($username); ?>
+        <a href="Edit/editProfile.php" class="edit-profile-btn">
+        <i class="fa-solid fa-pen"></i>
+        </a>
+        </h4>
+        <small><?php echo htmlspecialchars($email); ?></small>
+    </div>
+</div>
         </header>
 
         <div class="cards-grid" id="stats-container">
@@ -133,28 +109,42 @@ $username = $_SESSION["username"] ??"";
 </div>
 
 
-        <div class="table-responsive">
-            <h3>Recent Listings</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
-                        <td>Agent</td>
-                    </tr>
-                </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
+<div class="table-responsive">
+    <h3>Recent Listings</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Property Title</td>
+                <td>Price</td>
+                <td>Status</td>
+                <td>Agent</td>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if($recentProperties && $recentProperties->num_rows > 0): ?>
+            <?php while($row = $recentProperties->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['title']); ?></td>
+                    <td><?php echo number_format($row['price'], 2); ?></td>
+                    <td>
+                        <span class="status">
+                            <?php echo htmlspecialchars($row['status']); ?>
+                        </span>
+                    </td>
+                    <td>
+                        <?php echo htmlspecialchars($row['agent_name'] ?? 'N/A'); ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4">No recent listings found</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
-                </tbody>
-            </table>
-        </div>
 
     </main>
 </body>

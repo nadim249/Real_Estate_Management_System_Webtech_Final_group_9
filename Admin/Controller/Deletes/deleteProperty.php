@@ -1,15 +1,15 @@
 <?php
 session_start();
-require_once "../Model/DatabaseConnection.php";
+require_once "../../Model/DatabaseConnection.php";
 
 
 if (!isset($_SESSION['isLoggedIn']) || $_SESSION['isLoggedIn'] !== true) {
-    header("Location: ../View/Auth/login.php");
+    header("Location: ../../View/Auth/login.php");
     exit;
 }
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: ../View/AdminDash/propertiesdata.php");
+    header("Location: ../../View/AdminDash/propertiesdata.php");
     exit;
 }
 
@@ -28,6 +28,6 @@ $stmt->close();
 $connection->close();
 
 /* Redirect after delete */
-header("Location: ../View/AdminDash/propertiesdata.php?msg=deleted");
+header("Location: ../../View/AdminDash/propertiesdata.php?msg=deleted");
 exit;
 ?>

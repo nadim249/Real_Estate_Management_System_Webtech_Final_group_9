@@ -28,68 +28,35 @@ $propertiesResult = $connection->query($propertiesQuery);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-properties">
-  <div class="sidebar">
-        <div class="logo">
-            <i class="fa-solid fa-building fa-2x"></i>
-            <h2><a href="dashboard.php">
-            EstateMgr</h2>
-        </div>
-        <ul class="menu">
-            <li>
-                <a href="dashboard.php">
-                    <i class="fa-solid fa-gauge"></i> 
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="propertiesdata.php">
-                    <i class="fa-solid fa-house"></i> 
-                    <span>Properties</span>
-                </a>
-            </li>
-            <li>
-                <a href="approvals.php">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                     <span>Approvals</span>
-                    </a>
-            </li>
-            <li>
-                <a href="transactions.php">
-                    <i class="fa-solid fa-money-bill-wave"></i> 
-                    <span>Transactions</span>
-                </a>
-            </li>
-            <li>
-                <a href="agents.php">
-                    <i class="fa-solid fa-user-tie"></i> 
-                    <span>Agents</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.php">
-                    <i class="fa-solid fa-users"></i> 
-                    <span>Users</span>
-                </a>
-            </li>
-            <li class="logout-btn">
-                <a href="../../Controller/logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
-            </li>
-        </ul>
-    </div>
+        <?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
+   <?php include '../includes/sidebar.php'; ?>
+
+
     <main class="main-content">
         <header><div class="header-title"><h1>All Properties</h1></div>
                         <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
-                    <div>
-                    <h4><?php echo htmlspecialchars($username); ?></h4>
-                    <small><?php echo htmlspecialchars($email); ?></small>
-                    </div>
+    <div>
+        <h4><?php echo htmlspecialchars($username); ?>
+        <a href="editProfile.php" class="edit-profile-btn">
+        <i class="fa-solid fa-pen"></i>
+        </a>
+        </h4>
+        <small><?php echo htmlspecialchars($email); ?></small>
+    </div>
                 </div>
     </header>
 
     <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
     <p style="color: green;">Property deleted successfully!</p>
 <?php endif; ?>
+
+<?php if(isset($_GET['msg']) && $_GET['msg']=='updated'): ?>
+    <p class="success-msg">Property updated successfully!</p>
+<?php endif; ?>
+
 
         <div class="table-responsive">
            <table>
@@ -125,11 +92,12 @@ $propertiesResult = $connection->query($propertiesQuery);
                         <td><?php echo $row['num_bedrooms']; ?></td>
                         <td><?php echo $row['num_bathrooms']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['is_sold']; ?></td>
+                        <td><?php echo $row['is_sold'] ? 'Sold' : 'Unsold'; ?></td>
 
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
-                            <a class="delete-btn" href="../../Controller/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
+                           <a href="Edit/editProperty.php?id=<?php echo $row['property_id']; ?>" class="edit-btn">Edit</a>
+
+                            <a class="delete-btn" href="../../Controller/Deletes/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
                         </td>
                     </tr>
                     <?php

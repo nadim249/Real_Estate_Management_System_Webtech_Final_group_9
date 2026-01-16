@@ -12,7 +12,7 @@ include "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 
-$agentsQuery = "SELECT * FROM agents ORDER BY created_at DESC";
+$agentsQuery = "SELECT * FROM agents ORDER BY created_at ASC";
 $agentsResult = $connection->query($agentsQuery);
 
 ?>
@@ -29,68 +29,32 @@ $agentsResult = $connection->query($agentsQuery);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body id="page-agents">
-    <div class="sidebar">
-        <div class="logo">
-            <i class="fa-solid fa-building fa-2x"></i>
-            <h2><a href="dashboard.php">
-            EstateMgr</h2>
-        </div>
-        <ul class="menu">
-            <li>
-                <a href="dashboard.php">
-                    <i class="fa-solid fa-gauge"></i> 
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="propertiesdata.php">
-                    <i class="fa-solid fa-house"></i> 
-                    <span>Properties</span>
-                </a>
-            </li>
-            <li>
-                <a href="approvals.php">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                     <span>Approvals</span>
-                    </a>
-            </li>
-            <li>
-                <a href="transactions.php">
-                    <i class="fa-solid fa-money-bill-wave"></i> 
-                    <span>Transactions</span>
-                </a>
-            </li>
-            <li>
-                <a href="agents.php">
-                    <i class="fa-solid fa-user-tie"></i> 
-                    <span>Agents</span>
-                </a>
-            </li>
-            <li>
-                <a href="users.php">
-                    <i class="fa-solid fa-users"></i> 
-                    <span>Users</span>
-                </a>
-            </li>
-            <li class="logout-btn">
-                <a href="../../Controller/logout.php"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
-            </li>
-        </ul>
-    </div>
+        <?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
+ <?php include '../includes/sidebar.php'; ?>
+
     <main class="main-content">
         <header>
             <div class="header-title">
                 <h1>Our Agents</h1>
             </div>
-                            <div class="user-wrapper">
+            <div class="user-wrapper">
                     <i class="fa-duotone fa-solid fa-user user-img"></i>
-                    <div>
-                    <h4><?php echo htmlspecialchars($username); ?></h4>
-                    <small><?php echo htmlspecialchars($email); ?></small>
-                    </div>
+    <div>
+        <h4><?php echo htmlspecialchars($username); ?>
+        <a href="Edit/editProfile.php" class="edit-profile-btn">
+        <i class="fa-solid fa-pen"></i>
+        </a>
+        </h4>
+        <small><?php echo htmlspecialchars($email); ?></small>
+    </div>
                 </div>
         </header>
         <div class="table-responsive">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search..." />
+            </div>
     <table>
         <thead>
             <tr>
@@ -104,7 +68,7 @@ $agentsResult = $connection->query($agentsQuery);
                 <td>Actions</td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
             <?php
             if($agentsResult && $agentsResult->num_rows > 0){
                 while($row = $agentsResult->fetch_assoc()){
@@ -120,8 +84,12 @@ $agentsResult = $connection->query($agentsQuery);
 
 
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
-                            <a href="#" class="delete-btn">Delete</a>
+                        <a href="Edit/editAgent.php?id=<?php echo $row['agent_id']; ?>" class="edit-btn">Edit</a>
+                        <a href="../../Controller/Deletes/deleteAgent.php?id=<?php echo $row['agent_id']; ?>" 
+                           class="delete-btn" 
+                           onclick="return confirm('Are you sure you want to delete this agent?');">
+                           Delete
+                        </a>
                         </td>
                     </tr>
                     <?php
@@ -135,6 +103,9 @@ $agentsResult = $connection->query($agentsQuery);
 </div>
 
     </main>
+
+        <script src="../../Controller/JS/searchagent.js"></script>
+
 
 </body>
 </html>
