@@ -91,6 +91,11 @@ $propertiesResult = $connection->query($propertiesQuery);
     <p style="color: green;">Property deleted successfully!</p>
 <?php endif; ?>
 
+<?php if(isset($_GET['msg']) && $_GET['msg']=='updated'): ?>
+    <p class="success-msg">Property updated successfully!</p>
+<?php endif; ?>
+
+
         <div class="table-responsive">
            <table>
                 <thead>
@@ -125,10 +130,11 @@ $propertiesResult = $connection->query($propertiesQuery);
                         <td><?php echo $row['num_bedrooms']; ?></td>
                         <td><?php echo $row['num_bathrooms']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['is_sold']; ?></td>
+                        <td><?php echo $row['is_sold'] ? 'Sold' : 'Unsold'; ?></td>
 
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
+                           <a href="editProperty.php?id=<?php echo $row['property_id']; ?>" class="edit-btn">Edit</a>
+
                             <a class="delete-btn" href="../../Controller/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
                         </td>
                     </tr>
