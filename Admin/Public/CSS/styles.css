@@ -89,6 +89,26 @@ body {
     margin-top: 4px;
     display: block;
 }
+
+.password-wrapper {
+    position: relative;
+}
+
+
+
+.toggle-eye {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+
+.toggle-eye:hover {
+    color: #000;
+}
+
 /*Sidebar*/
 
 .sidebar {

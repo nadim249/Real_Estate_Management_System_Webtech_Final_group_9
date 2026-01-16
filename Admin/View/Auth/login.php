@@ -27,6 +27,8 @@ unset($_SESSION["passwordErr"]);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 <body>
     <body id="page-login">
@@ -47,7 +49,11 @@ unset($_SESSION["passwordErr"]);
             
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" id="login-pass" class="pass-input" placeholder="••••••••" name="password">
+                <div class="password-wrapper">
+                <input type="password" id="password" class="pass-input" placeholder="••••••••" name="password">
+                <i class="fa-solid fa-eye toggle-eye" onclick="togglePassword('password', this)"></i>
+
+                </div>
                 <span class="errSpan" style="color:red;"><?php  echo $passwordErr; ?></span>
 
             </div>
@@ -61,5 +67,22 @@ unset($_SESSION["passwordErr"]);
             <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
         </div>
     </div>
+
+    
+        <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+        </script>
 </body>
 </html>

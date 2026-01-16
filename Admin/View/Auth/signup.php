@@ -33,6 +33,8 @@ unset($_SESSION["loginErr"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <title>Sign up</title>
 
 </head>
@@ -57,14 +59,21 @@ unset($_SESSION["loginErr"]);
             </div>
             
             <div class="form-group">
+
                 <label>Password</label>
-                <input type="password" class="signup-input" placeholder="••••••••" name="password">
+                   <div class="password-wrapper">
+                <input type="password" id="password" class="signup-input" placeholder="••••••••" name="password">
+                <i class="fa-solid fa-eye toggle-eye" onclick="togglePassword('password', this)"></i>
+                </div>
                 <span class="errSpan"><?php  echo $passwordErr; ?></span>
             </div>
 
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" class="signup-input" placeholder="••••••••" name="repassword">
+                   <div class="password-wrapper">
+                <input type="password" id="cpassword" class="signup-input" placeholder="••••••••" name="repassword">
+                <i class="fa-solid fa-eye toggle-eye" onclick="togglePassword('cpassword', this)"></i>
+                </div>
                 <span class="errSpan"><?php  echo $repasswordErr; ?></span>
             </div>
 
@@ -77,6 +86,23 @@ unset($_SESSION["loginErr"]);
             <p>Already have an account? <a href="login.php">Login</a></p>
         </div>
     </div>
+
+        <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+        </script>
+
 
         <script src="../../Controller/JS/checkmail.js"></script>
 
