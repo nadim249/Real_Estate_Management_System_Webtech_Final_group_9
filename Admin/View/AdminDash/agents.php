@@ -52,6 +52,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
         </header>
         <div class="table-responsive">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search..." />
+            </div>
     <table>
         <thead>
             <tr>
@@ -65,7 +68,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <td>Actions</td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
             <?php
             if($agentsResult && $agentsResult->num_rows > 0){
                 while($row = $agentsResult->fetch_assoc()){
@@ -100,6 +103,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </div>
 
     </main>
+
+        <script src="../../Controller/JS/searchagent.js"></script>
+
 
 </body>
 </html>

@@ -55,6 +55,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <p style="color: green;">User deleted successfully!</p>
 <?php endif; ?>
 
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search..." />
+        </div>
+
     <table>
         <thead>
             <tr>
@@ -66,7 +70,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <td>Actions</td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
             <?php
             if($buyersResult->num_rows > 0){
                 while($row = $buyersResult->fetch_assoc()){
@@ -92,6 +96,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </tbody>
     </table>
     </main>
+
+    <script src="../../Controller/JS/searchuser.js"></script>
 
 </body>
 </html>

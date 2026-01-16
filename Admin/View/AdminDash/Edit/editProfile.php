@@ -27,6 +27,12 @@ $adminId = $_SESSION['admin_id'];
     <div class="update-container">
           <div class="update-header">
         <h2>Edit Profile</h2>
+        <?php if (isset($_GET['msg']) && $_GET['msg'] == 'already_exists'): ?>
+    <div class="alert alert-warning">
+        Username or Email already available
+    </div>
+<?php endif; ?>
+
         </div>
         <form method="POST" action="../../../Controller/updates/updateAdmin.php" class="update-form">
             <input type="hidden" name="admin_id" value="<?php echo $adminId; ?>">

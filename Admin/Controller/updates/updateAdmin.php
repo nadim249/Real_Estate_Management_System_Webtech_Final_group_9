@@ -3,19 +3,32 @@ session_start();
 require_once "../../Model/DatabaseConnection.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location:../../View/AdminDash/Dashboard.php");
+    header("Location: ../../View/AdminDash/Dashboard.php");
     exit;
 }
 
 $adminId  = intval($_POST['admin_id']);
-$username = $_POST['username'];
-$email    = $_POST['email'];
-$password = $_POST['password'];
+$username = trim($_POST['username']);
+$email    = trim($_POST['email']);
+$password = trim($_POST['password']);
 
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-if (!empty($password)) {
+$checkSql = "SELECT admin_id FROM admins 
+             WHERE (username = ? OR email = ?) AND admin_id != ?";
+$checkStmt = $conn->prepare($checkSql);
+$checkStmt->bind_param("ssi", $username, $email, $adminId);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+
+if ($checkResult->num_rows > 0) {
+    header("Location: ../../View/AdminDash/Edit/editProfile.php?msg=already_exists");
+    exit;
+}
+$checkStmt->close();
+
+if ($password !== "") {
     $sql = "UPDATE admins SET username=?, email=?, password=? WHERE admin_id=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssi", $username, $email, $password, $adminId);
@@ -26,13 +39,14 @@ if (!empty($password)) {
 }
 
 if ($stmt->execute()) {
-    // Update session info
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
 
     header("Location: ../../View/AdminDash/dashboard.php?msg=updated");
+    exit;
 } else {
-    echo "Update failed: " . $stmt->error;
+    header("Location: ../../View/AdminDash/Edit/editProfile.php?msg=failed");
+    exit;
 }
 
 $stmt->close();
