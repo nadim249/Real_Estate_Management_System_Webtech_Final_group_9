@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../../Model/DatabaseConnection.php";
+require_once "../../../Model/DatabaseConnection.php";
 
 if (!isset($_GET['id'])) {
-    header("Location: users.php");
+    header("Location: ../users.php");
     exit;
 }
 
@@ -16,7 +16,7 @@ $sql = "SELECT * FROM buyers WHERE user_id = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows !== 1) {
-    header("Location: users.php");
+    header("Location: ../users.php");
     exit;
 }
 
@@ -27,7 +27,7 @@ $user = $result->fetch_assoc();
 <html>
 <head>
     <title>Edit User</title>
-        <link rel="stylesheet" href="../../Public/CSS/update.css">
+        <link rel="stylesheet" href="../../../Public/CSS/update.css">
 
 </head>
 <body>
@@ -39,7 +39,7 @@ $user = $result->fetch_assoc();
     <p>Update buyer information</p>
   </div>
 
-  <form method="POST" action="../../Controller/updateUser.php" class="update-form">
+  <form method="POST" action="../../../Controller/updates/updateUser.php" class="update-form">
 
     <!-- Hidden ID -->
     <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
@@ -80,7 +80,7 @@ $user = $result->fetch_assoc();
     <!-- Actions -->
     <div class="update-actions">
       <button type="submit" class="btn-save">Update User</button>
-      <a href="users.php" class="btn-cancel">Cancel</a>
+      <a href="../users.php" class="btn-cancel">Cancel</a>
     </div>
 
   </form>

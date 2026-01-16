@@ -120,8 +120,8 @@ $agentsResult = $connection->query($agentsQuery);
 
 
                         <td>
-                        <a href="editAgent.php?id=<?php echo $row['agent_id']; ?>" class="edit-btn">Edit</a>
-                        <a href="../../Controller/deleteAgent.php?id=<?php echo $row['agent_id']; ?>" 
+                        <a href="Edit/editAgent.php?id=<?php echo $row['agent_id']; ?>" class="edit-btn">Edit</a>
+                        <a href="../../Controller/Deletes/deleteAgent.php?id=<?php echo $row['agent_id']; ?>" 
                            class="delete-btn" 
                            onclick="return confirm('Are you sure you want to delete this agent?');">
                            Delete

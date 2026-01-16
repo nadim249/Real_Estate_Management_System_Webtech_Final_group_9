@@ -1,9 +1,9 @@
 <?php
 session_start();
-include "../../Model/DatabaseConnection.php";
+include "../../../Model/DatabaseConnection.php";
 
 if(!isset($_GET['id'])) {
-    header("Location: agents.php");
+    header("Location: ../agents.php");
     exit;
 }
 
@@ -28,7 +28,7 @@ $agent = $result->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <title>Edit Agent</title>
-    <link rel="stylesheet" href="../../Public/CSS/update.css">
+    <link rel="stylesheet" href="../../../Public/CSS/update.css">
 </head>
 <body>
     <div class="update-container">
@@ -37,7 +37,7 @@ $agent = $result->fetch_assoc();
         <h2>Edit Agent</h2>
         </div>
 
-        <form method="POST" action="../../Controller/updateAgent.php" class="update-form">
+        <form method="POST" action="../../../Controller/updates/updateAgent.php" class="update-form">
             <input type="hidden" name="agent_id" value="<?php echo $agent['agent_id']; ?>">
 
             <div class="form-group">
@@ -64,7 +64,7 @@ $agent = $result->fetch_assoc();
                 <div class="update-actions">
 
     <button type="submit" class="btn-save">Update Agent</button>
-     <a href="agents.php" class="btn-cancel">Cancel</a>
+     <a href="../agents.php" class="btn-cancel">Cancel</a>
 </div>
     </form>
     </div>

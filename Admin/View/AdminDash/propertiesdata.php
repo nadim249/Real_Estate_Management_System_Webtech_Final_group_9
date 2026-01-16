@@ -133,9 +133,9 @@ $propertiesResult = $connection->query($propertiesQuery);
                         <td><?php echo $row['is_sold'] ? 'Sold' : 'Unsold'; ?></td>
 
                         <td>
-                           <a href="editProperty.php?id=<?php echo $row['property_id']; ?>" class="edit-btn">Edit</a>
+                           <a href="Edit/editProperty.php?id=<?php echo $row['property_id']; ?>" class="edit-btn">Edit</a>
 
-                            <a class="delete-btn" href="../../Controller/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
+                            <a class="delete-btn" href="../../Controller/Deletes/deleteProperty.php?id=<?php echo $row['property_id']; ?>" onclick="return confirm('Are you sure you want to delete this property?');">Delete</a>
                         </td>
                     </tr>
                     <?php

@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../../Model/DatabaseConnection.php";
+require_once "../../../Model/DatabaseConnection.php";
 
 if (!isset($_GET['id'])) {
-    header("Location: propertiesdata.php");
+    header("Location: ../propertiesdata.php");
     exit;
 }
 
@@ -16,7 +16,7 @@ $sql = "SELECT * FROM properties WHERE property_id = $propertyId";
 $result = $conn->query($sql);
 
 if ($result->num_rows !== 1) {
-    header("Location: propertiesdata.php");
+    header("Location: ../propertiesdata.php");
     exit;
 }
 
@@ -27,7 +27,7 @@ $property = $result->fetch_assoc();
 <html>
 <head>
     <title>Edit Property</title>
-    <link rel="stylesheet" href="../../Public/CSS/update.css">
+    <link rel="stylesheet" href="../../../Public/CSS/update.css">
 </head>
 <body>
 
@@ -37,7 +37,7 @@ $property = $result->fetch_assoc();
 <h2>Edit Property</h2>
 </div>
 
-<form method="POST" action="../../Controller/updateProperty.php" class="update-form">
+<form method="POST" action="../../../Controller/updates/updateProperty.php" class="update-form">
 
     <input type="hidden" name="property_id"
            value="<?php echo $property['property_id']; ?>">
@@ -111,7 +111,7 @@ $property = $result->fetch_assoc();
     <div class="update-actions">
 
     <button type="submit" class="btn-save">Update Property</button>
-     <a href="propertiesdata.php" class="btn-cancel">Cancel</a>
+     <a href="../propertiesdata.php" class="btn-cancel">Cancel</a>
 
 </div>
 </form>

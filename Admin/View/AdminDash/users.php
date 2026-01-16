@@ -117,12 +117,9 @@ $buyersResult = $connection->query($buyersQuery);
                         <td><?php echo $row['phone']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="editUser.php?id=<?php echo $row['user_id']; ?>" class="edit-btn">Edit</a>
-                                <a href="../../Controller/deleteUser.php?id=<?php echo $row['user_id']; ?>"
-       class="delete-btn"
-       onclick="return confirm('Are you sure you want to delete this user?');">
-       Delete
-    </a>
+                        <a href="Edit/editUser.php?id=<?php echo $row['user_id']; ?>" class="edit-btn">Edit</a>
+                        <a href="../../Controller/Deletes/deleteUser.php?id=<?php echo $row['user_id']; ?>"class="delete-btn"
+       onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                         </td>
                     </tr>
                     <?php
