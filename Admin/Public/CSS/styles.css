@@ -129,13 +129,23 @@ body {
   gap: 16px;
 }
 .sidebar a:hover{
-  color: coral;
+ color: #1abc9c; 
 }
 
 .logout-btn {
-  margin-top: 2rem;
+  margin: 1.5rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1rem;
+  padding: 1rem 0;
+}
+
+.logout-btn:hover{
+  background-color: #f44336;
+  color: aliceblue;
+  border-radius: 5px;
+}
+.menu a.active {
+    background-color: #3498db;
+    border-radius: 5px;
 }
 
 /* main content */
