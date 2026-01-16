@@ -12,7 +12,7 @@ include "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 
-$buyersQuery = "SELECT * FROM buyers ORDER BY created_at DESC";
+$buyersQuery = "SELECT * FROM buyers ORDER BY created_at ASC";
 $buyersResult = $connection->query($buyersQuery);
 
 ?>

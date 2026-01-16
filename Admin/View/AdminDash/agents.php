@@ -12,7 +12,7 @@ include "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 
-$agentsQuery = "SELECT * FROM agents ORDER BY created_at DESC";
+$agentsQuery = "SELECT * FROM agents ORDER BY created_at ASC";
 $agentsResult = $connection->query($agentsQuery);
 
 ?>
@@ -120,8 +120,12 @@ $agentsResult = $connection->query($agentsQuery);
 
 
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
-                            <a href="#" class="delete-btn">Delete</a>
+                        <a href="editAgent.php?id=<?php echo $row['agent_id']; ?>" class="edit-btn">Edit</a>
+                        <a href="../../Controller/deleteAgent.php?id=<?php echo $row['agent_id']; ?>" 
+                           class="delete-btn" 
+                           onclick="return confirm('Are you sure you want to delete this agent?');">
+                           Delete
+                        </a>
                         </td>
                     </tr>
                     <?php
