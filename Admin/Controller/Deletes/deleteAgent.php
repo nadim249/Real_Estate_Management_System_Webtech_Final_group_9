@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../Model/DatabaseConnection.php";
+require_once "../../Model/DatabaseConnection.php";
 
 if(!isset($_GET['id'])){
-    header("Location: ../View/agents.php");
+    header("Location: ../../View/AdminDash/agents.php");
     exit;
 }
 
@@ -17,13 +17,13 @@ $resultCheck = $conn->query($sqlCheck);
 
 if($resultCheck->num_rows > 0){
     $_SESSION['agentDeleteErr'] = "Cannot delete agent with assigned properties!";
-    header("Location: ../View/agents.php");
+    header("Location: ../View/AdminDash/agents.php");
     exit;
 }
 
 $sql = "DELETE FROM agents WHERE agent_id = $agentId";
 if($conn->query($sql)){
-    header("Location: ../View/agents.php?msg=deleted");
+    header("Location: ../View/AdminDash/agents.php?msg=deleted");
 } else {
     echo "Delete failed!";
 }

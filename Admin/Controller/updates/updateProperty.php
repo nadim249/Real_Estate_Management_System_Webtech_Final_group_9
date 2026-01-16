@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../Model/DatabaseConnection.php";
+require_once "../../Model/DatabaseConnection.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: ../View/AdminDash/propertiesdata.php");
+    header("Location: ../../View/AdminDash/propertiesdata.php");
     exit;
 }
 
@@ -36,7 +36,7 @@ $sql = "UPDATE properties SET
         WHERE property_id=$propertyId";
 
 if ($conn->query($sql)) {
-    header("Location: ../View/AdminDash/propertiesdata.php?msg=updated");
+    header("Location: ../../View/AdminDash/propertiesdata.php?msg=updated");
 } else {
     echo "Update Failed!";
 }

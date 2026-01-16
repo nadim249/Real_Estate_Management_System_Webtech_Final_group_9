@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../Model/DatabaseConnection.php";
+require_once "../../Model/DatabaseConnection.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: ../View/AdminDash/users.php");
+    header("Location: ../../View/AdminDash/users.php");
     exit;
 }
 
@@ -38,7 +38,7 @@ if (!empty($password)) {
 }
 
 if ($stmt->execute()) {
-    header("Location: ../View/AdminDash/users.php?msg=updated");
+    header("Location: ../../View/AdminDash/users.php?msg=updated");
 } else {
     echo "Update failed!";
 }

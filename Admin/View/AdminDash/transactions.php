@@ -14,7 +14,9 @@ $connection = $db->openConnection();
 
 $transactionsQuery = "
     SELECT t.transaction_id, t.booking_amount,t.full_price, t.payment_method, t.transaction_date, t.status,
-           p.title AS property_title, b.full_name AS buyer_name, a.full_name AS agent_name
+           p.title AS property_title,
+            b.full_name AS buyer_name, 
+            a.full_name AS agent_name
     FROM transactions t
     LEFT JOIN properties p ON t.property_id = p.property_id
     LEFT JOIN buyers b ON t.user_id = b.user_id
@@ -128,8 +130,13 @@ $transactionsResult = $connection->query($transactionsQuery);
                         <td><?php echo $row['transaction_date']; ?></td>
                         <td><?php echo $row['status']; ?></td>
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
-                            <a href="#" class="delete-btn">Delete</a>
+                                <a href="Edit/editTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="edit-btn">Edit</a>
+
+                                <a href="../../Controller/deleteTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="delete-btn">Delete</a>
+                                <?php if($row['status'] !== 'Completed'): ?>
+
+                                    <a href="../../Controller/approveTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="approve-btn">Approve</a>
+                                <?php endif; ?>
                         </td>
                     </tr>
                     <?php

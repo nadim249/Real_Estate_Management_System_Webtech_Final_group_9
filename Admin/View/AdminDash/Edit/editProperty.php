@@ -24,8 +24,9 @@ $property = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+        <meta charset="UTF-8">
     <title>Edit Property</title>
     <link rel="stylesheet" href="../../../Public/CSS/update.css">
 </head>
@@ -112,8 +113,8 @@ $property = $result->fetch_assoc();
 
     <button type="submit" class="btn-save">Update Property</button>
      <a href="../propertiesdata.php" class="btn-cancel">Cancel</a>
-
 </div>
+
 </form>
 </div>
 </body>
