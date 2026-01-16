@@ -1,6 +1,6 @@
 
 <?php
-include "../../Model/DatabaseConnection.php";
+require_once "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 

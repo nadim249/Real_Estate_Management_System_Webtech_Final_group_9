@@ -57,7 +57,7 @@ body {
 }
 
 .log-btn,
-.signup-btn {
+.signup-btn{
   width: 100%;
   padding: 12px;
   background-color: #2c3e50;
@@ -67,6 +67,9 @@ body {
   font-size: 1rem;
   cursor: pointer;
 }
+
+
+
 .login-footer,
 .signup-footer {
   text-align: center;

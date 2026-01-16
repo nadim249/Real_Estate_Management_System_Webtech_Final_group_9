@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../../Model/DatabaseConnection.php";
 include "../../Controller/dashboardcardCount.php";
 
 $isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
@@ -8,6 +9,19 @@ if(!$isLoggedIn){
 }
 $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
+
+
+
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+$sql = "SELECT p.title, p.price, p.status, a.full_name AS agent_name
+        FROM properties p
+        LEFT JOIN agents a ON p.agent_id = a.agent_id
+        ORDER BY p.created_at DESC
+        LIMIT 5";
+
+$recentProperties = $conn->query($sql);
 
 
 ?>
@@ -133,28 +147,42 @@ $username = $_SESSION["username"] ??"";
 </div>
 
 
-        <div class="table-responsive">
-            <h3>Recent Listings</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Property Title</td>
-                        <td>Price</td>
-                        <td>Status</td>
-                        <td>Agent</td>
-                    </tr>
-                </thead>
-                <tbody id="property-body">
-                    <tr>
-                        <td>Dhanmodi house</td>
-                        <td>32000000</td>
-                        <td><span class="status"></span>sale</td>
-                        <td>Rijon</td>
-                    </tr>
+<div class="table-responsive">
+    <h3>Recent Listings</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Property Title</td>
+                <td>Price</td>
+                <td>Status</td>
+                <td>Agent</td>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if($recentProperties && $recentProperties->num_rows > 0): ?>
+            <?php while($row = $recentProperties->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['title']); ?></td>
+                    <td><?php echo number_format($row['price'], 2); ?></td>
+                    <td>
+                        <span class="status">
+                            <?php echo htmlspecialchars($row['status']); ?>
+                        </span>
+                    </td>
+                    <td>
+                        <?php echo htmlspecialchars($row['agent_name'] ?? 'N/A'); ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4">No recent listings found</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
-                </tbody>
-            </table>
-        </div>
 
     </main>
 </body>

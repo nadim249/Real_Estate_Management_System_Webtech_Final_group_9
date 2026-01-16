@@ -86,6 +86,14 @@ $buyersResult = $connection->query($buyersQuery);
                 </div>
     </header>
 <div class="table-responsive">
+    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'updated'): ?>
+    <p style="color: green;">User updated successfully!</p>
+    <?php endif; ?>
+
+    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
+    <p style="color: green;">User deleted successfully!</p>
+<?php endif; ?>
+
     <table>
         <thead>
             <tr>
@@ -109,8 +117,12 @@ $buyersResult = $connection->query($buyersQuery);
                         <td><?php echo $row['phone']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="#" class="edit-btn">Edit</a>
-                            <a href="#" class="delete-btn">Delete</a>
+                            <a href="editUser.php?id=<?php echo $row['user_id']; ?>" class="edit-btn">Edit</a>
+                                <a href="../../Controller/deleteUser.php?id=<?php echo $row['user_id']; ?>"
+       class="delete-btn"
+       onclick="return confirm('Are you sure you want to delete this user?');">
+       Delete
+    </a>
                         </td>
                     </tr>
                     <?php
