@@ -14,15 +14,14 @@
 
     <div class="layout">
         <div class="sidebar">
-            <h2>Estate-Us</h2>
+             <h2 style="font-size: 40px;"> Estate-Us</h2>
             <hr>
 
             <div class="gap"></div>
-
-            <a href="#">Dashboard</a>
-            <a href="#">My Properties</a>
-            <a href="#">Inquiries</a>
-            <a href="#">Add Property</a>
+  <a href="Dashboard.php"><img src="images/dashboard.png" class="sb-icon" alt="Dashboard">Dashboard</a>
+      <a href="Properties.php"><img src="images/Myprop.png" class="sb-icon" alt="My Properties">My Properties</a>
+      <a href="Inquiries.php"><img src="images/inq.png" class="sb-icon" alt="Inquiries">Inquiries</a>
+      <a href="AddProperty.php" class="active"><img src="images/addproperties.png" class="sb-icon" alt="Add Property">Add Property</a>
         </div>
     </div>
 
