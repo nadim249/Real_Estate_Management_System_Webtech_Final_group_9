@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +25,10 @@
       <a href="Inquiries.php"><img src="images/inq.png" class="sb-icon" alt="Inquiries">Inquiries</a>
       <a href="AddProperty.php" class="active"><img src="images/addproperties.png" class="sb-icon" alt="Add Property">Add Property</a>
         </div>
+
+        
     </div>
+
 
 </body>
 </html>
