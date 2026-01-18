@@ -113,7 +113,7 @@ td {
 }
 
 
-.btn-delete{
+/* .btn-delete{
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
@@ -126,5 +126,28 @@ td {
 
 .btn-delete{
   background-color: #6a5a58;
+  color: white;
+} */
+
+.btn-delete{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* padding: 6px 12px; */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+}
+
+.btn-icon{
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  background: none;
+}
+.btn-delete{
+ 
   color: white;
 }

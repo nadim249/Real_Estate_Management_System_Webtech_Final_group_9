@@ -5,7 +5,8 @@ $db = new DatabaseConn();
 $conn = $db->openConnection();
 
 
-$listings = $conn->query("SELECT id, property_name, views, inquiries, status FROM listings ORDER BY created_at DESC");
+$listings = $conn->query("SELECT id, property_name, price, type, bedrooms, bathrooms, views, status FROM my_properties ORDER BY created_at DESC");
+
 
 if(!$listings){
     die("Query failed: " . $conn->error);
@@ -48,24 +49,31 @@ if(!$listings){
             <thead>
                 <tr>
                     <th>Property</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Bedrooms</th>
+                    <th>Bathrooms</th>
                     <th>Views</th>
-                    <th>Inquiries</th>
                     <th>Status</th>
+                    <th>Delete</th> 
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $listings->fetch_assoc()): ?>
                 <tr>
                     <td><?= $row['property_name'] ?></td>
+                    <td><?= $row['price'] ?></td>
+                    <td><?= $row['type'] ?></td>
+                    <td><?= $row['bedrooms'] ?></td>
+                    <td><?= $row['bathrooms'] ?></td>
                     <td><?= $row['views'] ?></td>
-                    <td><?= $row['inquiries'] ?></td>
                     <td><?= $row['status'] ?></td>
 
                      <td>
-        <form action="deleteListing.php" method="POST"
+        <form action="../CONTROLLER/deleteListing.php" method="POST"
               onsubmit="return confirm('Are you sure you want to delete this property?');">
           <input type="hidden" name="id" value="<?= $row['id'] ?>">
-          <button type="submit" class="btn-delete">Delete</button>
+          <button type="submit" class="btn-delete"><img src="images/trash-bin.png" class="btn-icon" alt=""></button>
         </form>
       </td>
                 </tr>
