@@ -37,3 +37,57 @@
     {
         margin: 80px;
     }
+
+
+/* Card styling */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+    width: 100%;
+    background: #eef0f4;
+    min-height: 100vh;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    flex: 1;
+    background: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.card p {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #3e3942;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
