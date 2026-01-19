@@ -155,11 +155,14 @@ if ($isLoggedIn) {
         <p class="small">
           Secure this property now by paying the booking token amount.
         </p>
+<form method="POST" action="../Controller/transaction.php">
+      <input type="hidden" name="property_id" value="<?php echo (int)$property['property_id']; ?>">
 
-        <label class="label">Booking Amount (Token)</label>
-        <input class="input" type="number" value="500000" />
+      <label class="label">Booking Amount (Token)</label>
+      <input class="input" type="number" step="0.01" name="booking_amount" required>
 
-        <button class="btn btn-green">Book Now</button>
+      <button type="submit" class="btn btn-green">Book Now</button>
+    </form>
       </div>
 
     </div>
