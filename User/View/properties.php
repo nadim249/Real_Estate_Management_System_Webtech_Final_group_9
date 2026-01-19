@@ -20,6 +20,8 @@ $sql = "SELECT property_id, title, location, price, type, num_bedrooms, num_bath
 
 $result = $conn->query($sql);
 
+// fallback image
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +56,7 @@ if ($isLoggedIn) {
 
         <div class="card">
           <div class="img-box">
-            <img src="<?php echo htmlspecialchars($image_url); ?>" alt="Property" />
+            <img src="<?php echo $row['image_url']; ?>" alt="Property" />
             <span class="tag tag-blue"><?php echo strtoupper(htmlspecialchars($row['type'])); ?></span>
           </div>
 
@@ -88,9 +90,7 @@ if ($isLoggedIn) {
               </div>
             </div>
 
-            <button class="btn">
-              <a href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">View Details</a>
-            </button>
+              <a class="btn" href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">View Details</a>
           </div>
         </div>
 
