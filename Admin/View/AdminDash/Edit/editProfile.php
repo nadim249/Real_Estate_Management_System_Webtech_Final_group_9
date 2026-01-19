@@ -56,7 +56,7 @@ $adminId = $_SESSION['admin_id'];
 
             <div class="update-actions">
                 <button type="submit" class="btn-save">Update Profile</button>
-                <a href="../users.php" class="btn-cancel">Cancel</a>
+                <a href="../dashboard.php" class="btn-cancel">Cancel</a>
             </div>
         </form>
     </div>
