@@ -27,23 +27,33 @@
         </div>
 <div class="main-content">
     <h1>Add Property</h1>
-    <p>Add a new listing. </p>
+    <p>Add a new property listing.</p>
 
     <div class="container">
-      <form action="../CONTROLLER/addListing.php" method="POST" class="add-form">
+      <form action="../CONTROLLER/addMyProperty.php" method="POST" class="add-form">
 
         <label>Property Name</label>
         <input type="text" name="property_name" required>
 
-        <label>Status</label>
-        <select name="status" required>
-          <option value="Active">Active</option>
-          <option value="Sold">Sold</option>
+        <label>Type</label>
+        <select name="type" required>
+          <option value="Sale">Sale</option>
+          <option value="Rent">Rent</option>
         </select>
+
+        <label>Price</label>
+        <input type="number" name="price" min="0" required>
+
+        <label>Bedrooms</label>
+        <input type="number" name="bedrooms" min="0" required>
+
+        <label>Bathrooms</label>
+        <input type="number" name="bathrooms" min="0" required>
 
         <button type="submit" name="add_property">Add Property</button>
       </form>
     </div>
+
   </div>
 
         

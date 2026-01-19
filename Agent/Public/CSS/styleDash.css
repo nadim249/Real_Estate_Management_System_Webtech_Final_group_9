@@ -151,3 +151,25 @@ td {
  
   color: white;
 }
+
+/* add property */
+.add-form{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.add-form input,
+.add-form select{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.add-form button{
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
