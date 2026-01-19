@@ -1,28 +1,35 @@
-
-.edit-btn, .delete-btn,.approve-btn {
-    display: inline-block;
-    padding: 5px 10px;
-    margin-right: 5px;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 13px;
-    margin-bottom: 5px;
+.edit-btn,
+.delete-btn,
+.approve-btn {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 5px;
 }
 
 .edit-btn {
-    background-color: #3498db;
+  background-color: #3498db;
 }
 
 .delete-btn {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
 }
 
 .approve-btn {
-    background-color: #27ae60;
+  background-color: #27ae60;
 }
-.approve-btn:hover { background-color: #1e8449; }
+.approve-btn:hover {
+  background-color: #1e8449;
+}
 
-.edit-btn:hover { background-color: #2980b9; }
+.edit-btn:hover {
+  background-color: #2980b9;
+}
 
-.delete-btn:hover { background-color: #c0392b; }
+.delete-btn:hover {
+  background-color: #c0392b;
+}

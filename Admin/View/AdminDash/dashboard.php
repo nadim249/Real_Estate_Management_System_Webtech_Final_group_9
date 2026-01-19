@@ -3,12 +3,12 @@ session_start();
 include "../../Model/DatabaseConnection.php";
 include "../../Controller/dashboardcardCount.php";
 
-$isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
-if(!$isLoggedIn){
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+if (!$isLoggedIn) {
     Header("Location: login.php");
 }
-$email = $_SESSION["email"] ??"";
-$username = $_SESSION["username"] ??"";
+$email = $_SESSION["email"] ?? "";
+$username = $_SESSION["username"] ?? "";
 
 
 
@@ -28,6 +28,7 @@ $recentProperties = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,10 +36,11 @@ $recentProperties = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Dashboard</title>
 </head>
+
 <body id="page-dashboard">
     <?php
-$currentPage = basename($_SERVER['PHP_SELF']);
-?>
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    ?>
     <?php include '../includes/sidebar.php'; ?>
 
     <main class="main-content">
@@ -48,104 +50,105 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
 
             <div class="user-wrapper">
-    <i class="fa-duotone fa-solid fa-user user-img"></i>
-    <div>
-        <h4><?php echo htmlspecialchars($username); ?>
-        <a href="Edit/editProfile.php" class="edit-profile-btn">
-        <i class="fa-solid fa-pen"></i>
-        </a>
-        </h4>
-        <small><?php echo htmlspecialchars($email); ?></small>
-    </div>
-</div>
+                <i class="fa-duotone fa-solid fa-user user-img"></i>
+                <div>
+                    <h4><?php echo htmlspecialchars($username); ?>
+                        <a href="Edit/editProfile.php" class="edit-profile-btn">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    </h4>
+                    <small><?php echo htmlspecialchars($email); ?></small>
+                </div>
+            </div>
         </header>
 
         <div class="cards-grid" id="stats-container">
 
-    <!-- Total Users -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalUsers; ?></h1>
-            <span>Total Users</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-users" id="logo-card"></span>
-        </div>
-    </div>
+            <!-- Total Users -->
+            <div class="single-card">
+                <div>
+                    <h1><?php echo $totalUsers; ?></h1>
+                    <span>Total Users</span>
+                </div>
+                <div>
+                    <span class="fa-solid fa-users" id="logo-card"></span>
+                </div>
+            </div>
 
-    <!-- Total Properties -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalProperties; ?></h1>
-            <span>Total Properties</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-house" id="logo-card"></span>
-        </div>
-    </div>
+            <!-- Total Properties -->
+            <div class="single-card">
+                <div>
+                    <h1><?php echo $totalProperties; ?></h1>
+                    <span>Total Properties</span>
+                </div>
+                <div>
+                    <span class="fa-solid fa-house" id="logo-card"></span>
+                </div>
+            </div>
 
-    <!-- Pending Approvals -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $pendingApprovals; ?></h1>
-            <span>Pending Approvals</span>
-        </div>
-        <div>
-            <span class="fa-solid fa-clock" id="logo-card"></span>
-        </div>
-    </div>
+            <!-- Pending Approvals -->
+            <div class="single-card">
+                <div>
+                    <h1><?php echo $pendingApprovals; ?></h1>
+                    <span>Pending Approvals</span>
+                </div>
+                <div>
+                    <span class="fa-solid fa-clock" id="logo-card"></span>
+                </div>
+            </div>
 
-    <!-- Total Sold -->
-    <div class="single-card">
-        <div>
-            <h1><?php echo $totalSoldThisMonth; ?></h1>
-            <span> Sold(This Month)</span>
+            <!-- Total Sold -->
+            <div class="single-card">
+                <div>
+                    <h1><?php echo $totalSoldThisMonth; ?></h1>
+                    <span> Sold(This Month)</span>
+                </div>
+                <div>
+                    <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
+                </div>
+            </div>
+
         </div>
-        <div>
-            <span class="fa-solid fa-hand-holding-dollar" id="logo-card"></span>
+
+
+        <div class="table-responsive">
+            <h3>Recent Listings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Property Title</td>
+                        <td>Price</td>
+                        <td>Status</td>
+                        <td>Agent</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
+                        <?php while ($row = $recentProperties->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['title']); ?></td>
+                                <td><?php echo number_format($row['price'], 2); ?></td>
+                                <td>
+                                    <span class="status">
+                                        <?php echo htmlspecialchars($row['status']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php echo htmlspecialchars($row['agent_name'] ?? 'N/A'); ?>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4">No recent listings found</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
-    </div>
-
-</div>
-
-
-<div class="table-responsive">
-    <h3>Recent Listings</h3>
-    <table>
-        <thead>
-            <tr>
-                <td>Property Title</td>
-                <td>Price</td>
-                <td>Status</td>
-                <td>Agent</td>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if($recentProperties && $recentProperties->num_rows > 0): ?>
-            <?php while($row = $recentProperties->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($row['title']); ?></td>
-                    <td><?php echo number_format($row['price'], 2); ?></td>
-                    <td>
-                        <span class="status">
-                            <?php echo htmlspecialchars($row['status']); ?>
-                        </span>
-                    </td>
-                    <td>
-                        <?php echo htmlspecialchars($row['agent_name'] ?? 'N/A'); ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="4">No recent listings found</td>
-            </tr>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
 
 
     </main>
 </body>
+
 </html>

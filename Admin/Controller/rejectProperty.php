@@ -2,13 +2,13 @@
 include "../Model/DatabaseConnection.php";
 session_start();
 
-if(!($_SESSION["isLoggedIn"] ?? false)){
+if (!($_SESSION["isLoggedIn"] ?? false)) {
     header("Location: ../View/Auth/login.php");
     exit;
 }
 
 $id = $_GET['id'] ?? null;
-if(!$id) exit;
+if (!$id) exit;
 
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
