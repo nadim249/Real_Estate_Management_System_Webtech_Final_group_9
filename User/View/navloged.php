@@ -10,7 +10,7 @@
     </nav>
 
     <div class="nav-right">
-      <a class="login" href="profile.php">profile</a>
-      <a class="signup" href="../Controller/logout.php">logout</a>
+      <a class="login" href="profile.php">Profile</a>
+      <a class="signup" href="../Controller/logout.php">Logout</a>
     </div>
   </header>
