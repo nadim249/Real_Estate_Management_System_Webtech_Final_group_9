@@ -3,6 +3,6 @@ session_start();
 
 session_destroy();
 
-Header("Location: ..\View\login.php");
+Header("Location: ..\View\LogIn.php");
 
 ?>

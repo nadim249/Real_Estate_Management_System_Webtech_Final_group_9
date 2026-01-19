@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+
+$email = $_SESSION["email"] ??"";
+$username = $_SESSION["username"] ??"";
+$isLoggedIn= $_SESSION["isLoggedIn"]??"";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,23 +17,13 @@
 
 </head>
 <body>
-      <header class="nav">
-    <div class="nav-left">
-      <span class="logo">EstateNexus</span>
-    </div>
-
-    <nav class="nav-center">
-      <a href="dashboard.php">Home</a>
-      <a href="properties.php">Properties</a>
-      <a href="aboutus.php">About Us</a>
-      <a href="contact.php">Contact</a>
-    </nav>
-
-    <div class="nav-right">
-      <a class="login" href="login.php">Log In</a>
-      <a class="signup" href="signup.php">Sign Up</a>
-    </div>
-  </header>
+<?php 
+if ($isLoggedIn) {
+    include 'navloged.php';
+} else {
+    include 'nav.php';
+}
+?>
 
 
   <section class="about">

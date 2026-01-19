@@ -31,19 +31,19 @@ $values["email"] = $email;
 
 $_SESSION["previousValues"] = $values;
 
-Header("Location: ..\View\login.php");
+Header("Location: ../View/LogIn.php");
 
 }else{
     $db = new DatabaseConnection();
     $connection = $db->openConnection();
     $result = $db->signin($connection, "buyers", $email, $password);
     if($result->num_rows > 0){
-        Header("Location: ..\View\dashboard.php");
+        Header("Location: ../View/dashboard.php");
         $_SESSION["email"] = $email;
         $_SESSION["isLoggedIn"] = true;
     }else{
         $_SESSION["loginErr"] = "Email or password is invalid";
-        Header("Location: ..\View\login.php");
+        Header("Location: ../View/LogIn.php");
     }
     
 }
