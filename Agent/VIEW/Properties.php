@@ -5,7 +5,7 @@ $db = new DatabaseConn();
 $conn = $db->openConnection();
 
 
-$listings = $conn->query("SELECT id, property_name, price, type, bedrooms, bathrooms, views, status FROM my_properties ORDER BY created_at DESC");
+$listings = $conn->query("SELECT property_id, title, type, location, price, area_sqft, num_bedrooms, num_bathrooms, status FROM properties ORDER BY created_at DESC");
 
 
 if(!$listings){
@@ -48,12 +48,13 @@ if(!$listings){
     <table>
             <thead>
                 <tr>
-                    <th>Property</th>
-                    <th>Price</th>
+                    <th>Title</th>
                     <th>Type</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Area(sqft)</th>
                     <th>Bedrooms</th>
                     <th>Bathrooms</th>
-                    <th>Views</th>
                     <th>Status</th>
                     <th>Delete</th> 
                 </tr>
@@ -61,18 +62,20 @@ if(!$listings){
             <tbody>
                 <?php while ($row = $listings->fetch_assoc()): ?>
                 <tr>
-                    <td><?= $row['property_name'] ?></td>
-                    <td><?= $row['price'] ?></td>
+                    <td><?= $row['title'] ?></td>
                     <td><?= $row['type'] ?></td>
-                    <td><?= $row['bedrooms'] ?></td>
-                    <td><?= $row['bathrooms'] ?></td>
-                    <td><?= $row['views'] ?></td>
+                    <td><?= $row['location'] ?></td>
+                    <td><?= $row['price'] ?></td>
+                    <td><?= $row['area_sqft'] ?></td>
+                    <td><?= $row['num_bedrooms'] ?></td>
+                    <td><?= $row['num_bathrooms'] ?></td>
                     <td><?= $row['status'] ?></td>
+
 
                      <td>
         <form action="../CONTROLLER/deleteListing.php" method="POST"
               onsubmit="return confirm('Are you sure you want to delete this property?');">
-          <input type="hidden" name="id" value="<?= $row['id'] ?>">
+<input type="hidden" name="id" value="<?= $row['property_id'] ?>">
           <button type="submit" class="btn-delete"><img src="images/trash-bin.png" class="btn-icon" alt=""></button>
         </form>
       </td>

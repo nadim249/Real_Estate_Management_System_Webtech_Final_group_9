@@ -13,7 +13,7 @@ $db = new DatabaseConn();
 $conn = $db->openConnection();
 
 
-$stmt = $conn->prepare("DELETE FROM my_properties WHERE id = ?");
+$stmt = $conn->prepare("DELETE FROM properties WHERE property_id = ?");
 $stmt->bind_param("i", $id);
 
 $stmt->execute();
