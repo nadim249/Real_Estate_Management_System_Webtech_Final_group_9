@@ -1,5 +1,3 @@
-
-
 .update-container {
   max-width: 600px;
   margin: 80px auto;
@@ -50,13 +48,12 @@
 }
 
 .form-group input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    margin-left: 5px;
-    vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-left: 5px;
+  vertical-align: middle;
 }
-
 
 .update-form textarea {
   resize: vertical;

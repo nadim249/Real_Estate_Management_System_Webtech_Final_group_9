@@ -2,7 +2,7 @@
 session_start();
 include "../../../Model/DatabaseConnection.php";
 
-if(!isset($_GET['id'])) {
+if (!isset($_GET['id'])) {
     header("Location: ../agents.php");
     exit;
 }
@@ -15,7 +15,7 @@ $conn = $db->openConnection();
 $sql = "SELECT * FROM agents WHERE agent_id = $agentId";
 $result = $conn->query($sql);
 
-if($result->num_rows === 0){
+if ($result->num_rows === 0) {
     echo "Agent not found!";
     exit;
 }
@@ -25,16 +25,18 @@ $agent = $result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Edit Agent</title>
     <link rel="stylesheet" href="../../../Public/CSS/update.css">
 </head>
+
 <body>
     <div class="update-container">
-    
-  <div class="update-header">
-        <h2>Edit Agent</h2>
+
+        <div class="update-header">
+            <h2>Edit Agent</h2>
         </div>
 
         <form method="POST" action="../../../Controller/updates/updateAgent.php" class="update-form">
@@ -57,16 +59,17 @@ $agent = $result->fetch_assoc();
 
             <div class="form-group">
                 <label>Commission (%)</label>
-                <input type="number" step="0.01" name="commission" 
-                       value="<?php echo htmlspecialchars($agent['commission_rate']); ?>" required>
+                <input type="number" step="0.01" name="commission"
+                    value="<?php echo htmlspecialchars($agent['commission_rate']); ?>" required>
             </div>
 
-                <div class="update-actions">
+            <div class="update-actions">
 
-    <button type="submit" class="btn-save">Update Agent</button>
-     <a href="../agents.php" class="btn-cancel">Cancel</a>
-</div>
-    </form>
+                <button type="submit" class="btn-save">Update Agent</button>
+                <a href="../agents.php" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
     </div>
 </body>
+
 </html>
