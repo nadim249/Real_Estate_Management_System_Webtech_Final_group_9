@@ -32,26 +32,41 @@
     <div class="container">
       <form action="../CONTROLLER/addMyProperty.php" method="POST" class="add-form">
 
-        <label>Property Name</label>
-        <input type="text" name="property_name" required>
+  <label>Title</label>
+  <input type="text" name="title" required>
 
-        <label>Type</label>
-        <select name="type" required>
-          <option value="Sale">Sale</option>
-          <option value="Rent">Rent</option>
-        </select>
+  <label>Description</label>
+  <textarea name="description" rows="4"></textarea>
 
-        <label>Price</label>
-        <input type="number" name="price" min="0" required>
+  <label>Type</label>
+  <select name="type" required>
+    <option value="Apartment">Apartment</option>
+    <option value="House">House</option>
+    <option value="Commercial">Commercial</option>
+    <option value="Land">Land</option>
+  </select>
 
-        <label>Bedrooms</label>
-        <input type="number" name="bedrooms" min="0" required>
+  <label>Location</label>
+  <input type="text" name="location" required>
 
-        <label>Bathrooms</label>
-        <input type="number" name="bathrooms" min="0" required>
+  <label>Price</label>
+  <input type="number" name="price" step="0.01" min="0" required>
 
-        <button type="submit" name="add_property">Add Property</button>
-      </form>
+  <label>Area (sqft)</label>
+  <input type="number" name="area_sqft" min="0" required>
+
+  <label>Bedrooms</label>
+  <input type="number" name="num_bedrooms" min="0">
+
+  <label>Bathrooms</label>
+  <input type="number" name="num_bathrooms" min="0">
+
+  <label>Image URL</label>
+  <input type="text" name="image_url" placeholder="uploads/example.jpg">
+
+  <button type="submit" name="add_property">Add Property</button>
+</form>
+
     </div>
 
   </div>

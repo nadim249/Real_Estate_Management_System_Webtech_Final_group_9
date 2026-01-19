@@ -1,3 +1,25 @@
+<?php 
+session_start();
+
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+if($isLoggedIn){
+    Header("Location: dashboard.php");
+}
+$emailErr = $_SESSION["emailErr"] ?? "";
+$passwordErr = $_SESSION["passwordErr"] ?? "";
+$loginErr = $_SESSION["loginErr"] ?? "";
+
+$previousValues = $_SESSION["previousValues"] ?? [];
+
+
+unset($_SESSION["previousValues"]);
+unset($_SESSION["emailErr"]);
+unset($_SESSION["passwordErr"]);
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +45,12 @@
             
             <div class="box">
                 <h2>Login</h2>
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <button>Login</button>
+               <form action="../CONTROLLER/LoginValidation.php" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                </form>
+
                 <a href=""></a>Forget Password?
                 <br>
                 <br>

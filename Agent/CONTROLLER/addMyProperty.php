@@ -6,13 +6,19 @@ if (!isset($_POST['add_property'])) {
     exit;
 }
 
-$property_name = trim($_POST['property_name'] ?? '');
-$type          = $_POST['type'] ?? '';
-$price         = (int)($_POST['price'] ?? 0);
-$bedrooms      = (int)($_POST['bedrooms'] ?? 0);
-$bathrooms     = (int)($_POST['bathrooms'] ?? 0);
+$title        = trim($_POST['title'] ?? '');
+$description  = trim($_POST['description'] ?? '');
+$type         = $_POST['type'] ?? '';
+$location     = trim($_POST['location'] ?? '');
+$price        = (float)($_POST['price'] ?? 0);
+$area_sqft    = (int)($_POST['area_sqft'] ?? 0);
+$num_bedrooms = (int)($_POST['num_bedrooms'] ?? 0);
+$num_bathrooms= (int)($_POST['num_bathrooms'] ?? 0);
+$image_url    = trim($_POST['image_url'] ?? '');
 
-if ($property_name === '' || ($type !== 'Sale' && $type !== 'Rent')) {
+$allowedTypes = ['Apartment','House','Commercial','Land'];
+
+if ($title === '' || $location === '' || !in_array($type, $allowedTypes, true) || $price <= 0 || $area_sqft <= 0) {
     header("Location: ../VIEW/AddProperty.php");
     exit;
 }
@@ -20,12 +26,20 @@ if ($property_name === '' || ($type !== 'Sale' && $type !== 'Rent')) {
 $db = new DatabaseConn();
 $conn = $db->openConnection();
 
+
+$agent_id = NULL;
+
 $stmt = $conn->prepare("
-    INSERT INTO my_properties (property_name, price, type, bedrooms, bathrooms, views, status)
-    VALUES (?, ?, ?, ?, ?, 0, 'Active')
+  INSERT INTO properties
+  (agent_id, title, description, type, location, price, area_sqft, num_bedrooms, num_bathrooms, image_url)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
-$stmt->bind_param("sisii", $property_name, $price, $type, $bedrooms, $bathrooms);
+$stmt->bind_param(
+  "isssssiiis",
+  $agent_id, $title, $description, $type, $location,
+  $price, $area_sqft, $num_bedrooms, $num_bathrooms, $image_url
+);
 
 $stmt->execute();
 
