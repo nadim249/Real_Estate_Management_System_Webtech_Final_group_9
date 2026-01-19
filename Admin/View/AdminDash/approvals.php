@@ -1,14 +1,16 @@
 <?php
+
 session_start();
+include_once "../../Controller/authCheck.php";
 
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 if (!$isLoggedIn) {
-    Header("Location: login.php");
+    Header("Location: ../Auth/login.php");
 }
 $email = $_SESSION["email"] ?? "";
 $username = $_SESSION["username"] ?? "";
 
-include "../../Model/DatabaseConnection.php";
+include_once "../../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 

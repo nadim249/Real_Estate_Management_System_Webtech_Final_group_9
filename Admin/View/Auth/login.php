@@ -60,6 +60,11 @@ unset($_SESSION["passwordErr"]);
 
                 </div>
 
+                <div class="form-group remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember Me</label>
+                </div>
+
                 <button type="submit" class="log-btn">Login</button>
                 <span class="errSpan"><?php echo $loginErr; ?></span>
 

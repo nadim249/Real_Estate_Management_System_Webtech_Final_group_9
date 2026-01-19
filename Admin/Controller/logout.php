@@ -2,7 +2,8 @@
 session_start();
 
 session_destroy();
+setcookie("email", "", time() - 3600, "/");
 
-Header("Location: ..\View\Auth\login.php");
+Header("Location: ../View/Auth/login.php");
 
 ?>

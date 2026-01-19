@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="signup-card">
         <form method="post">
             <div class="form-group">
-
+                <h1>Forget Password</h1>
                 <label>Email or Username</label>
 
                 <input type="text" class="signup-input" name="user" required>

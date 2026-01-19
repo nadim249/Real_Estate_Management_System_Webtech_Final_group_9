@@ -43,7 +43,14 @@ if (count($errors) > 0) {
         $_SESSION["isLoggedIn"] = true;
         $_SESSION["username"] = $user['username'];
 
+            if (isset($_POST['remember'])) {
+        setcookie("email", $email, time() + 7*24*60*60, "/");
+    } else {
+        setcookie("email", "", time() - 3600, "/");
+    }
+
         Header("Location: ../View/AdminDash/dashboard.php");
+        exit();
     } else {
         $_SESSION["loginErr"] = "Email or password is invalid";
         Header("Location: ../View/Auth/login.php");

@@ -23,6 +23,7 @@ if (!isset($_SESSION['verified'])) {
     <div class="signup-card">
         <form method="post" action="../../Controller/updates/updatePassword.php">
             <div class="form-group">
+                <h3>Reset your password</h3>
 
                 <label>New Password</label>
                 <input type="password" name="password" class="signup-input" required>

@@ -53,6 +53,7 @@ $questionText = $questions[$_SESSION['sec_q']] ?? "Security question not found."
 <form method="post">
 
 <div class="form-group">
+    <h1>Answer the Question</h1>
         <p><?php echo $questionText; ?></p>
 
 </div>
