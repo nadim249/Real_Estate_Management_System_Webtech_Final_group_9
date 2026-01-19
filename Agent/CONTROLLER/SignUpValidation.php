@@ -76,7 +76,8 @@ if($existing->num_rows > 0){
 
 $result = $db->signUp($connection, "users", $first_name, $last_name, $email, $password);
     if($result){
-        
+        $_SESSION["successMsg"] = "Account created successfully. Please login.";
+
 header("Location: ../VIEW/Login.php");
 exit;
       

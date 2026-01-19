@@ -1,6 +1,10 @@
 <?php 
 session_start();
 
+$successMsg = $_SESSION["successMsg"] ?? "";
+unset($_SESSION["successMsg"]);
+
+
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 if($isLoggedIn){
     Header("Location: dashboard.php");
@@ -45,13 +49,14 @@ unset($_SESSION["passwordErr"]);
             
             <div class="box">
                 <h2>Login</h2>
+
                <form action="../CONTROLLER/LoginValidation.php" method="POST">
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
                 </form>
 
-                <a href=""></a>Forget Password?
+                <a href="" ></a>Forget Password?
                 <br>
                 <br>
                 <br>
@@ -60,7 +65,10 @@ unset($_SESSION["passwordErr"]);
                     New here?
                     <a href="Signup.php" >
                   <button>Sign up</button>
+
                     </a>
+                      <?php if(!empty($successMsg)) echo "<p class='success-msg'>$successMsg</p>"; ?>
+
                 </p>
             </div>
         </div>

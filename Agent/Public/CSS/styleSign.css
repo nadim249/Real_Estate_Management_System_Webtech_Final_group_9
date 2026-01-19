@@ -58,3 +58,11 @@ body
     border-radius: 20px;
     display: block;
 }
+
+.success-msg{
+  padding: 10px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
