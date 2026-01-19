@@ -1,0 +1,72 @@
+<?php
+session_start();
+require_once "../Model/DatabaseConnection.php";
+
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+$userId = $_SESSION["user_id"] ?? null;
+
+if(!$isLoggedIn || !$userId){
+  header("Location: login.php");
+  exit;
+}
+
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+$stmt = $conn->prepare("SELECT user_id, full_name, email, phone FROM buyers WHERE user_id=?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$res = $stmt->get_result();
+
+if(!$res || $res->num_rows !== 1){
+  header("Location: dashboard.php");
+  exit;
+}
+$user = $res->fetch_assoc();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile</title>
+  <link rel="stylesheet" href="../Public/css/style6.css" />
+    <link rel="stylesheet" href="../Public/css/profile.css" />
+</head>
+<body>
+
+<?php include 'navloged.php'; ?>
+
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin:0 0 14px;">My Profile</h2>
+    <form method="POST" action="../Controller/profile_update.php">
+
+    <div class="row">
+      <div>
+        <label class="lbl">Name</label>
+        <input class="inp" type="text" name="name" value="<?php echo htmlspecialchars($user['full_name'] ?? ''); ?>" >
+      </div>
+      <div>
+        <label class="lbl">Email</label>
+        <input class="inp" name="email" type="text" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>" >
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label class="lbl">Phone</label>
+        <input class="inp" name="phone" type="text" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>" >
+      </div>
+    </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-blue">Update</button>
+        <a href="dashboard.php" class="btn btn-gray">Cancel</a>
+      </div>
+        </form>
+  </div>
+</div>
+
+</body>
+</html>

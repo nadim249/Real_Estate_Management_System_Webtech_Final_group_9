@@ -124,14 +124,29 @@ if ($isLoggedIn) {
             <?php endif; ?>
       </div>
 
-      <div class="card panel">
-        <h3 class="panel-title">Inquiry to Agent</h3>
+ <div class="card panel">
+  <h3 class="panel-title">Inquiry to Agent</h3>
 
-        <label class="label">Your Message</label>
-        <textarea class="textarea" placeholder="Is the price negotiable?"></textarea>
+  <?php if(!$isLoggedIn): ?>
+      <p style="margin:10px 0;">Please login to contact the agent.</p>
+      <a class="btn btn-dark" href="login.php">Login</a>
+  <?php else: ?>
 
-        <button class="btn btn-dark">Send Message</button>
-      </div>
+    <form method="POST" action="../Controller/sendInquiry.php">
+
+      <input type="hidden" name="property_id" 
+             value="<?php echo (int)$property['property_id']; ?>">
+
+      <label class="label">Your Message</label>
+      <textarea class="textarea" name="message" required
+        placeholder="Is the price negotiable?"></textarea>
+
+      <button type="submit" class="btn btn-dark">Send Message</button>
+    </form>
+
+  <?php endif; ?>
+</div>
+
 
       <div class="card panel buy">
         <h3 class="panel-title">Ready to Buy?</h3>
