@@ -53,6 +53,7 @@ $listings = $conn->query(
       <a href="Properties.php"><img src="images/Myprop.png" class="sb-icon" alt="My Properties">My Properties</a>
       <a href="Inquiries.php"><img src="images/inq.png" class="sb-icon" alt="Inquiries">Inquiries</a>
       <a href="AddProperty.php"><img src="images/addproperties.png" class="sb-icon" alt="Add Property">Add Property</a>
+    <a href="../CONTROLLER/logout.php"><img src="images/undo.png" class="sb-icon" alt="Logout">Logout</a>
     </div>  
 
 
