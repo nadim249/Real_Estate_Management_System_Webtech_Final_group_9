@@ -1,11 +1,24 @@
 <?php
 session_start();
+require_once "../Model/DatabaseConnection.php";
 
+$email = $_SESSION["email"] ?? "";
+$username = $_SESSION["username"] ?? "";
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 
-$email = $_SESSION["email"] ??"";
-$username = $_SESSION["username"] ??"";
-$isLoggedIn= $_SESSION["isLoggedIn"]??"";
+// DB
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+// Load 4 featured properties (latest 4 active)
+$sql = "SELECT property_id, title, location, price, type, image_url
+        FROM properties
+        WHERE status = 'Active'
+        ORDER BY property_id DESC
+        LIMIT 4";
+$result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,120 +26,87 @@ $isLoggedIn= $_SESSION["isLoggedIn"]??"";
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EstateNexus - Home</title>
   <link rel="stylesheet" href="../Public/css/style6.css" />
+  
 </head>
 <body>
 
 <?php 
-if ($isLoggedIn) {
-    include 'navloged.php';
-} else {
-    include 'nav.php';
-}
+if ($isLoggedIn) include 'navloged.php';
+else include 'nav.php';
 ?>
 
-  <section class="hero">
-    <div class="hero-box">
-      <h1>Find Your Dream Home</h1>
-      <p>Browse thousands of properties for sale and rent.</p>
+<section class="hero">
+  <div class="hero-box">
+    <h1>Find Your Dream Home</h1>
+    <p>Browse thousands of properties for sale and rent.</p>
 
-
-      <div class="search-panel">
-        <div class="tabs">
-          <button class="tab active">Buy</button>
-        </div>
-
-        <div class="search-row">
-          <div class="field">
-            <label>Property Type</label>
-            <select>
-              <option>Any Type</option>
-              <option>Apartment</option>
-              <option>House</option>
-              <option>Villa</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Location</label>
-            <select>
-              <option>Gulshan</option>
-              <option>Bashundhara</option>
-              <option>Banani</option>
-              <option>Dhanmondi</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Price Range</label>
-            <select>
-              <option>Minimum - Maximum</option>
-              <option>20,000,000 BDT - 300,000,000 BDT</option>
-              <option>300,000,000 BDT - 700,000,000 BDT</option>
-              <option>700,000,000 BDT</option>
-            </select>
-          </div>
-
-          <button class="search-btn"> Search</button>
-        </div>
-      </div>
+    <!-- SIMPLE SEARCH -->
+    <div class="simple-search">
+      <input id="q" type="text" placeholder="Search by location, title, type..." />
+      <a class="btn-search" id="searchBtn" href="properties.php">Search</a>
     </div>
-  </section>
+  </div>
+</section>
 
+<section class="featured">
+  <h2>Featured Properties</h2>
 
-  <section class="featured">
-    <h2>Featured Properties</h2>
+  <div class="cards">
 
-    <div class="cards">
+    <?php if ($result && $result->num_rows > 0): ?>
+      <?php while($row = $result->fetch_assoc()): ?>
+        <?php
+          $img = !empty($row['image_url'])
+            ? $row['image_url']
+            : "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop";
 
-      <div class="p-card">
-        <div class="p-img">
-          <span class="badge sale">For Sale</span>
-          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop" alt="Villa">
-        </div>
-        <div class="p-body">
-          <div class="p-price">450,000,000 BDT</div>
-          <div class="p-title">Modern Villa</div>
-          <div class="p-loc"> Gulshan 2, Dhaka</div>
-        </div>
-      </div>
+          // badge text based on type (simple)
+          $badgeText = "Featured";
+          $badgeClass = "sale"; // reuse your existing badge styles
+        ?>
 
-      <div class="p-card">
-        <div class="p-img">
-          <span class="badge rent">For Rent</span>
-          <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200&auto=format&fit=crop" alt="Apartment">
-        </div>
-        <div class="p-body">
-          <div class="p-price">200,000 BDT/mo</div>
-          <div class="p-title">City Apartment</div>
-          <div class="p-loc">Banani, Dhaka</div>
-        </div>
-      </div>
+        <div class="p-card">
+          <div class="p-img">
+            <span class="badge <?php echo $badgeClass; ?>">
+              <?php echo htmlspecialchars($badgeText); ?>
+            </span>
 
-      <div class="p-card">
-        <div class="p-img">
-          <span class="badge sale">For Sale</span>
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="House">
-        </div>
-        <div class="p-body">
-          <div class="p-price">50,200,000 BDT</div>
-          <div class="p-title">Modern Family Home</div>
-          <div class="p-loc"> Bashundhara R/A, Dhaka</div>
-        </div>
-      </div>
+            <img src="<?php echo htmlspecialchars($img); ?>" alt="Property">
+          </div>
 
-      <div class="p-card">
-        <div class="p-img">
-          <span class="badge sale">For Sale</span>
-          <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop" alt="Penthouse">
-        </div>
-        <div class="p-body">
-          <div class="p-price">200,500,000 BDT</div>
-          <div class="p-title">Luxury Penthouse</div>
-          <div class="p-loc"> Dhanmondi,Dhaka</div>
-        </div>
-      </div>
+          <div class="p-body">
+            <div class="p-price"><?php echo number_format((float)$row['price']); ?> BDT</div>
+            <div class="p-title"><?php echo htmlspecialchars($row['title']); ?></div>
+            <div class="p-loc"><?php echo htmlspecialchars($row['location']); ?></div>
 
-    </div>
-  </section>
+            <!-- optional: simple details link -->
+            <a class="btn-search" style="margin-top:12px; display:inline-block;"
+               href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">
+              View Details
+            </a>
+          </div>
+        </div>
+
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p style="padding: 20px;">No featured properties found.</p>
+    <?php endif; ?>
+
+  </div>
+</section>
+
+<script>
+  const q = document.getElementById('q');
+  const btn = document.getElementById('searchBtn');
+
+  function updateLink(){
+    const val = encodeURIComponent(q.value.trim());
+    btn.href = val ? `../Controller/propertiesearch.php?q=${val}` : 'properties.php';
+  }
+
+  q.addEventListener('input', updateLink);
+  updateLink();
+</script>
+
 </body>
 </html>
