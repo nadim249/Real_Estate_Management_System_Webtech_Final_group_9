@@ -116,7 +116,7 @@ body {
 }
 
 .btn {
-  display: block;          /* makes width work */
+  display: block;      
   width: 100%;
   padding: 12px 0;
   text-align: center;

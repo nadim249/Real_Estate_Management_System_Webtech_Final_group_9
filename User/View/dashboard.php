@@ -10,7 +10,6 @@ $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-// Load 4 featured properties (latest 4 active)
 $sql = "SELECT property_id, title, location, price, type, image_url
         FROM properties
         WHERE status = 'Active'
@@ -40,7 +39,6 @@ else include 'nav.php';
     <h1>Find Your Dream Home</h1>
     <p>Browse thousands of properties for sale and rent.</p>
 
-    <!-- SIMPLE SEARCH -->
     <div class="simple-search">
       <input id="q" type="text" placeholder="Search by location, title, type..." />
       <a class="btn-search" id="searchBtn" href="properties.php">Search</a>
@@ -60,9 +58,8 @@ else include 'nav.php';
             ? $row['image_url']
             : "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop";
 
-          // badge text based on type (simple)
           $badgeText = "Featured";
-          $badgeClass = "sale"; // reuse your existing badge styles
+          $badgeClass = "sale"; 
         ?>
 
         <div class="p-card">
@@ -79,7 +76,6 @@ else include 'nav.php';
             <div class="p-title"><?php echo htmlspecialchars($row['title']); ?></div>
             <div class="p-loc"><?php echo htmlspecialchars($row['location']); ?></div>
 
-            <!-- optional: simple details link -->
             <a class="btn-search" style="margin-top:12px; display:inline-block;"
                href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">
               View Details

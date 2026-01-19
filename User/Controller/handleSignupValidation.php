@@ -14,7 +14,6 @@ $password = $_REQUEST["password"] ?? "";
 $errors = [];
 $values = [];
 
-// validation
 if ($fullname === "") {
     $errors["fullname"] = "This is a required field";
 }
@@ -28,7 +27,6 @@ if ($password === "") {
     $errors["password"] = "Password field is required";
 }
 
-// keep old values (so form can re-fill if you want)
 $values["fullname"] = $fullname;
 $values["email"] = $email;
 $values["phone"] = $phone;
@@ -45,11 +43,9 @@ if (count($errors) > 0) {
     exit;
 }
 
-// DB work
 $db = new DatabaseConnection();
 $connection = $db->openConnection();
 
-// check existing email
 $existing = $db->checkExistingUser($connection, "buyers", $email);
 if ($existing && $existing->num_rows > 0) {
     $_SESSION["emailErr"] = "Email Already Used";
@@ -60,7 +56,6 @@ if ($existing && $existing->num_rows > 0) {
     exit;
 }
 
-// signup (insert)
 $result = $db->signUp($connection, "buyers", $fullname, $email, $phone, $password);
 
 $db->closeConnection($connection);

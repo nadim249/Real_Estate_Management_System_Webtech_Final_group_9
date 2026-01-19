@@ -6,18 +6,15 @@ $email = $_SESSION["email"] ?? "";
 $username = $_SESSION["username"] ?? "";
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 
-// 1) Check id
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: properties.php"); // change to your listing page
+    header("Location: properties.php"); 
     exit;
 }
 $propertyId = (int)$_GET['id'];
 
-// 2) DB connection
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-// 3) Fetch property safely
 $stmt = $conn->prepare("SELECT property_id, title, location, description, type, area_sqft, num_bedrooms, num_bathrooms, price, image_url
                         FROM properties
                         WHERE property_id = ?");
@@ -26,13 +23,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if (!$result || $result->num_rows !== 1) {
-    header("Location: properties.php"); // change to your listing page
+    header("Location: properties.php");
     exit;
 }
 
 $property = $result->fetch_assoc();
 
-// fallback image
 $img = !empty($property['image_url'])
     ? $property['image_url']
     : "uploads/vill_banani.jpg";
@@ -45,6 +41,8 @@ $img = !empty($property['image_url'])
   <title>Property Details</title>
   <link rel="stylesheet" href="../Public/css/style3.css" />
   <link rel="stylesheet" href="../Public/css/style6.css" />
+    <link rel="stylesheet" href="../Public/css/style2.css" />
+
 </head>
 <body>
 
@@ -96,9 +94,6 @@ if ($isLoggedIn) {
       <div class="card description">
         <h2>Description</h2>
         <p><?php echo nl2br(htmlspecialchars($property['description'])); ?></p>
-
-        <!-- Optional: if you have amenities column in DB, show here -->
-        <!-- <p class="amenities"><strong>Amenities:</strong> ...</p> -->
       </div>
 
     </div>
@@ -107,18 +102,26 @@ if ($isLoggedIn) {
 
       <div class="card panel">
         <h3 class="panel-title">Schedule a Viewing</h3>
+          <?php if(!$isLoggedIn): ?>
+    <p style="margin:10px 0;">Please login to request a viewing.</p>
+    <a class="btn btn-blue" href="login.php">Login</a>
+  <?php else: ?>
+    <form method="GET" action="../Controller/scheduleview.php">
 
-        <!-- If you want to submit these to DB, wrap in form and add action -->
-        <label class="label">Select Date</label>
-        <input class="input" type="date" />
+      <input type="hidden" name="property_id" value="<?php echo (int)$property['property_id']; ?>">
 
-        <label class="label">Select Time</label>
-        <input class="input" type="time" />
+      <label class="label">Select Date</label>
+      <input class="input" type="date" name="schedule_date" required>
 
-        <label class="label">Note (Optional)</label>
-        <input class="input" type="text" placeholder="I am available after 5 PM" />
+      <label class="label">Select Time</label>
+      <input class="input" type="time" name="schedule_time" required>
 
-        <button class="btn btn-blue">Request Visit</button>
+      <label class="label">Note (Optional)</label>
+      <input class="input" type="text" name="buyer_note" placeholder="I am free only on weekends.">
+
+  <button type="submit" class="btn btn-blue">Request Visit</button>
+    </form>
+            <?php endif; ?>
       </div>
 
       <div class="card panel">

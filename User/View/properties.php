@@ -8,11 +8,9 @@ $email = $_SESSION["email"] ??"";
 $username = $_SESSION["username"] ??"";
 $isLoggedIn= $_SESSION["isLoggedIn"]??"";
 
-// DB
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-// Example query (change columns/table names if different)
 $sql = "SELECT property_id, title, location, price, type, num_bedrooms, num_bathrooms, area_sqft, image_url
         FROM properties
         WHERE status = 'Active'
@@ -20,7 +18,6 @@ $sql = "SELECT property_id, title, location, price, type, num_bedrooms, num_bath
 
 $result = $conn->query($sql);
 
-// fallback image
 
 ?>
 <!DOCTYPE html>
