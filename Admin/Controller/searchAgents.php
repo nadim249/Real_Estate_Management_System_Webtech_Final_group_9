@@ -1,7 +1,6 @@
 <?php
 include "../Model/DatabaseConnection.php";
 
-// Sanitize input (also using prepared statements below)
 $search = $_POST['query'] ?? '';
 
 $db = new DatabaseConnection();

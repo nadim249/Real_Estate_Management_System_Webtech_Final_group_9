@@ -6,7 +6,6 @@ $Email = $_POST["Email"];
 if ($Email == "") {
     echo "Email Empty";
 } else {
-    // echo $Email;
     $db = new DatabaseConnection();
     $connection = $db->openConnection();
     $result = $db->checkExistingUser($connection, "admins", $Email);
@@ -15,5 +14,4 @@ if ($Email == "") {
     } else {
         echo "Unique Email, can be used";
     }
-    // $connection->closeConnection($conobj);
 }

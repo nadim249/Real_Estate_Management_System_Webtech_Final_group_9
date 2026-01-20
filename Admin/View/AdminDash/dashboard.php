@@ -1,30 +1,5 @@
 <?php
-session_start();
-include_once "../../Model/DatabaseConnection.php";
-include "../../Controller/dashboardcardCount.php";
-include_once "../../Controller/authCheck.php";
-
-$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
-if (!$isLoggedIn) {
-    Header("Location: ../Auth/login.php");
-}
-$email = $_SESSION["email"] ?? "";
-$username = $_SESSION["username"] ?? "";
-
-
-
-$db = new DatabaseConnection();
-$conn = $db->openConnection();
-
-$sql = "SELECT p.title, p.price, p.status, a.full_name AS agent_name
-        FROM properties p
-        LEFT JOIN agents a ON p.agent_id = a.agent_id
-        ORDER BY p.created_at DESC
-        LIMIT 5";
-
-$recentProperties = $conn->query($sql);
-
-
+include_once "../../Controller/dashboardController.php";
 ?>
 
 <!DOCTYPE html>

@@ -1,21 +1,5 @@
 <?php
-session_start();
-include_once "../../Controller/authCheck.php";
-
-$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
-if (!$isLoggedIn) {
-    Header("Location: ../Auth/login.php");
-}
-$email = $_SESSION["email"] ?? "";
-$username = $_SESSION["username"] ?? "";
-
-include_once "../../Model/DatabaseConnection.php";
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
-
-$agentsQuery = "SELECT * FROM agents ORDER BY created_at ASC";
-$agentsResult = $connection->query($agentsQuery);
-
+include_once "../../Controller/agentController.php";
 ?>
 
 <!DOCTYPE html>

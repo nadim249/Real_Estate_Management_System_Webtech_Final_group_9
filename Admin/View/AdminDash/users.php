@@ -1,22 +1,7 @@
 <?php
-session_start();
-include_once "../../Controller/authCheck.php";
-
-$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
-if (!$isLoggedIn) {
-    Header("Location: ../Auth/login.php");
-}
-$email = $_SESSION["email"] ?? "";
-$username = $_SESSION["username"] ?? "";
-
-include_once "../../Model/DatabaseConnection.php";
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
-
-$buyersQuery = "SELECT * FROM buyers ORDER BY created_at ASC";
-$buyersResult = $connection->query($buyersQuery);
-
+include_once "../../Controller/usersController.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

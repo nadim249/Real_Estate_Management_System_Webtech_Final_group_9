@@ -1,22 +1,7 @@
 <?php
-session_start();
-include_once "../../Controller/authCheck.php";
-
-$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
-if (!$isLoggedIn) {
-    Header("Location: ../Auth/login.php");
-}
-$email = $_SESSION["email"] ?? "";
-$username = $_SESSION["username"] ?? "";
-
-include_once "../../Model/DatabaseConnection.php";
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
-
-$propertiesQuery = "SELECT * FROM properties ORDER BY created_at DESC";
-$propertiesResult = $connection->query($propertiesQuery);
-
+include_once "../../Controller/propertiesController.php";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
