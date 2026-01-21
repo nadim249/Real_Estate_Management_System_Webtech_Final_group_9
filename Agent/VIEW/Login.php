@@ -58,7 +58,8 @@ unset($_SESSION["loginErr"]);
                 <input type="password" name="password" placeholder="Password" required>
                 <div class="login-actions">
   <button type="submit">Login</button>
-  <a href="#" class="forgot-link">Forget Password?</a>
+<a href="ForgetPassword.php" class="forgot-link">Forget Password?</a>
+
 </div>
 </form>
 
