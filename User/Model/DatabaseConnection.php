@@ -51,5 +51,32 @@ class DatabaseConnection {
             $connection->close();
         }
     }
+
+    public function getUserViews($userId) {
+    $conn = $this->openConnection();
+    $stmt = $conn->prepare("SELECT * FROM viewings WHERE user_id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $views = [];
+    while ($row = $result->fetch_assoc()) {
+        $views[] = $row;
+    }
+    return $views;
+}
+
+public function getUserTransactions($userId) {
+    $conn = $this->openConnection();
+    $stmt = $conn->prepare("SELECT * FROM transactions WHERE user_id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $transactions = [];
+    while ($row = $result->fetch_assoc()) {
+        $transactions[] = $row;
+    }
+    return $transactions;
+}
+
 }
 ?>

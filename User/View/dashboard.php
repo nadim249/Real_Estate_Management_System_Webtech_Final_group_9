@@ -38,10 +38,11 @@ else include 'nav.php';
   <div class="hero-box">
     <h1>Find Your Dream Home</h1>
     <p>Browse thousands of properties for sale and rent.</p>
-
     <div class="simple-search">
       <input id="q" type="text" placeholder="Search by location, title, type..." />
       <a class="btn-search" id="searchBtn" href="properties.php">Search</a>
+    </div>
+    <div id="searchResults" ></div> 
     </div>
   </div>
 </section>
@@ -91,18 +92,7 @@ else include 'nav.php';
   </div>
 </section>
 
-<script>
-  const q = document.getElementById('q');
-  const btn = document.getElementById('searchBtn');
-
-  function updateLink(){
-    const val = encodeURIComponent(q.value.trim());
-    btn.href = val ? `../Controller/propertiesearch.php?q=${val}` : 'properties.php';
-  }
-
-  q.addEventListener('input', updateLink);
-  updateLink();
-</script>
-
+<script src="..\Controller\JS\searchpropertise.js
+"></script>
 </body>
 </html>

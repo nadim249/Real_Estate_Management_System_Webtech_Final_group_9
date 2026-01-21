@@ -1,4 +1,3 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +9,6 @@ body {
   background: #f2f4f7;
 }
 
-/* Center section */
 .contact {
   min-height: 100vh;
   display: flex;
@@ -19,7 +17,6 @@ body {
   padding-top: 70px;
 }
 
-/* Main box */
 .box {
   width: 90%;
   max-width: 1200px;
@@ -30,7 +27,6 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
 }
 
-/* Title */
 .title {
   font-size: 48px;
   font-weight: 800;
@@ -38,7 +34,6 @@ body {
   margin-bottom: 35px;
 }
 
-/* Form layout */
 .form {
   width: 60%;
   margin: 0 auto;
@@ -47,7 +42,6 @@ body {
   gap: 18px;
 }
 
-/* Inputs */
 .input, .textarea {
   width: 100%;
   padding: 14px 16px;
@@ -58,13 +52,11 @@ body {
   background: #ffffff;
 }
 
-/* Message box bigger */
 .textarea {
   height: 90px;
   resize: none;
 }
 
-/* Button */
 .btn {
   width: 100%;
   height: 48px;

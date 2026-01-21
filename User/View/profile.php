@@ -23,6 +23,9 @@ if(!$res || $res->num_rows !== 1){
   exit;
 }
 $user = $res->fetch_assoc();
+
+$userViews = $db->getUserViews($userId);
+$userTransactions = $db->getUserTransactions($userId);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +70,61 @@ $user = $res->fetch_assoc();
         </form>
   </div>
 </div>
+<div class="card">
+    <h3>User Views</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Property ID</th>
+          <th>Agent ID</th>
+          <th>Schedule Date</th>
+          <th>Status</th>
+          <th>Buyer Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($userViews as $view): ?>
+        <tr>
+          <td><?php echo $view['property_id']; ?></td>
+          <td><?php echo $view['agent_id']; ?></td>
+          <td><?php echo $view['schedule_date']; ?></td>
+          <td><?php echo $view['status']; ?></td>
+          <td><?php echo $view['buyer_note']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="card">
+    <h3>User Transactions</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Property ID</th>
+          <th>Booking Amount</th>
+          <th>Full Price</th>
+          <th>Payment Method</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($userTransactions as $transaction): ?>
+        <tr>
+          <td><?php echo $transaction['transaction_id']; ?></td>
+          <td><?php echo $transaction['property_id']; ?></td>
+          <td><?php echo number_format((float)$transaction['booking_amount']); ?> BDT</td>
+          <td><?php echo number_format((float)$transaction['full_price']); ?> BDT</td>
+          <td><?php echo $transaction['payment_method']; ?></td>
+          <td><?php echo $transaction['status']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 </body>
 </html>

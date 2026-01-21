@@ -44,7 +44,7 @@ unset($_SESSION["passwordErr"]);
 
         <button class="btn" type="submit">Login</button>
 
-        <a class="forgot" href="#">Forgot Password?</a>
+        <a class="forgot" href="forget.php">Forgot Password?</a>
       </form>
     </div>
   </div>
