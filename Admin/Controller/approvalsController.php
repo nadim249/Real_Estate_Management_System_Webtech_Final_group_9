@@ -2,6 +2,7 @@
 session_start();
 include_once "../../Controller/authCheck.php";
 include_once "../../Model/DatabaseConnection.php";
+require_once "../../Model/approvalsmodel.php";
 
 if (!($_SESSION["isLoggedIn"] ?? false)) {
     header("Location: ../Auth/login.php");
@@ -11,7 +12,10 @@ if (!($_SESSION["isLoggedIn"] ?? false)) {
 $username = $_SESSION['username'] ?? '';
 $email    = $_SESSION['email'] ?? '';
 
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
 
-$approvalsResult = $db->getPendingApprovals($connection);
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+$approval = new ApproveModel($conn);
+
+$approvalsResult = $approval->getPendingApprovals();

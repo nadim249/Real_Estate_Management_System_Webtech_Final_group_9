@@ -2,6 +2,13 @@
 session_start();
 include_once "../../Controller/authCheck.php";
 include_once "../../Model/DatabaseConnection.php";
+require_once "../../Model/UserModel.php";
+
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+$user = new UserModel($conn);
+
 
 if (!($_SESSION["isLoggedIn"] ?? false)) {
     header("Location: ../Auth/login.php");
@@ -11,7 +18,6 @@ if (!($_SESSION["isLoggedIn"] ?? false)) {
 $username = $_SESSION['username'] ?? '';
 $email    = $_SESSION['email'] ?? '';
 
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
 
-$buyersResult = $db->getAllBuyers($connection);
+
+$buyersResult = $user->getAllBuyers();

@@ -2,6 +2,7 @@
 session_start();
 include_once "../../Controller/authCheck.php";
 include_once "../../Model/DatabaseConnection.php";
+require_once "../../Model/propertisemodel.php";
 
 if (!($_SESSION["isLoggedIn"] ?? false)) {
     header("Location: ../Auth/login.php");
@@ -12,6 +13,8 @@ $username = $_SESSION['username'] ?? '';
 $email    = $_SESSION['email'] ?? '';
 
 $db = new DatabaseConnection();
-$connection = $db->openConnection();
+$conn = $db->openConnection();
 
-$propertiesResult = $db->getAllProperties($connection);
+$properties = new PropertiseModel($conn);
+
+$propertiesResult = $properties->getAllProperties();
