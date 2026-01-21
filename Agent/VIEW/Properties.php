@@ -41,8 +41,36 @@ if(!$listings){
         </div>
 
           <div class="main-content">
-  <h1>My Properties</h1>
-  <p>All your listings are shown below.</p>
+ <div class="page-header">
+  <div>
+    <h1>My Properties</h1>
+    <p>All your listings are shown below.</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="q" placeholder="Search title..." onkeyup="searchProperties()">
+
+    <select id="status" onchange="searchProperties()">
+      <option value="">All Status</option>
+      <option value="Active">Active</option>
+      <option value="Pending">Pending</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+
+    <select id="type" onchange="searchProperties()">
+      <option value="">All Type</option>
+      <option value="Apartment">Apartment</option>
+      <option value="House">House</option>
+      <option value="Commercial">Commercial</option>
+      <option value="Land">Land</option>
+    </select>
+
+    <button type="button" onclick="clearSearch()">Clear</button>
+  </div>
+</div>
+
+<div id="ajaxResponse"></div>
+
 
   <div class="container">
     <table>
@@ -59,7 +87,7 @@ if(!$listings){
                     <th>Delete</th> 
                 </tr>
             </thead>
-            <tbody>
+                <tbody id="propertiesBody">
                 <?php while ($row = $listings->fetch_assoc()): ?>
                 <tr>
                     <td><?= $row['title'] ?></td>
@@ -87,6 +115,40 @@ if(!$listings){
   </div>
 </div>
     </div>
+<script>
+function searchProperties(){
+    var q = document.getElementById("q").value;
+    var status = document.getElementById("status").value;
+    var type = document.getElementById("type").value;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                document.getElementById("propertiesBody").innerHTML = this.responseText;
+                document.getElementById("ajaxResponse").innerHTML = "";
+            } else {
+                document.getElementById("ajaxResponse").innerHTML = "Error: " + this.status;
+            }
+        }
+    };
+
+    xhttp.open("POST", "../CONTROLLER/searchProperties.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(
+      "q=" + encodeURIComponent(q) +
+      "&status=" + encodeURIComponent(status) +
+      "&type=" + encodeURIComponent(type)
+    );
+}
+
+function clearSearch(){
+    document.getElementById("q").value = "";
+    document.getElementById("status").value = "";
+    document.getElementById("type").value = "";
+    searchProperties();
+}
+</script>
 
 </body>
 </html>
