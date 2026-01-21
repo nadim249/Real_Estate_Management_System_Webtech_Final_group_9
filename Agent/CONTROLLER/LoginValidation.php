@@ -39,9 +39,11 @@ Header("Location: ../View/Login.php");
     $connection = $db->openConnection();
     $result = $db->signin($connection, "users", $email, $password);
     if($result->num_rows > 0){
-        Header("Location: ../View/Dashboard.php");
-        $_SESSION["email"] = $email;
-        $_SESSION["isLoggedIn"] = true;
+     $_SESSION["email"] = $email;
+$_SESSION["isLoggedIn"] = true;
+header("Location: ../View/Dashboard.php");
+exit;
+
     }else{
         $_SESSION["loginErr"] = "Email or password is invalid";
         Header("Location: ../View/Login.php");

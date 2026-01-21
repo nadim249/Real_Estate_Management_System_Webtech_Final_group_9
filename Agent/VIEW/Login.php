@@ -15,10 +15,11 @@ $loginErr = $_SESSION["loginErr"] ?? "";
 
 $previousValues = $_SESSION["previousValues"] ?? [];
 
-
 unset($_SESSION["previousValues"]);
 unset($_SESSION["emailErr"]);
 unset($_SESSION["passwordErr"]);
+unset($_SESSION["loginErr"]);
+
 
 
 ?>
@@ -49,6 +50,8 @@ unset($_SESSION["passwordErr"]);
             
             <div class="box">
                 <h2>Login</h2>
+                <?php if(!empty($loginErr)) echo "<p class='error-msg'>$loginErr</p>"; ?>
+
 
                <form action="../CONTROLLER/LoginValidation.php" method="POST">
                 <input type="email" name="email" placeholder="Email" required>
