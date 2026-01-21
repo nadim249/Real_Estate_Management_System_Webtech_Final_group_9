@@ -1,25 +1,14 @@
 <?php
-require_once "../Model/DatabaseConnection.php";
-
 session_start();
 
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 
-$email = $_SESSION["email"] ??"";
-$username = $_SESSION["username"] ??"";
-$isLoggedIn= $_SESSION["isLoggedIn"]??"";
+require_once "../Model/DatabaseConnection.php";
 
 $db = new DatabaseConnection();
-$conn = $db->openConnection();
-
-$sql = "SELECT property_id, title, location, price, type, num_bedrooms, num_bathrooms, area_sqft, image_url
-        FROM properties
-        WHERE status = 'Active'
-        ORDER BY property_id DESC";
-
-$result = $conn->query($sql);
-
-
+$properties = $db->getActiveProperties();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,10 +16,10 @@ $result = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Available Properties</title>
   <link rel="stylesheet" href="../Public/css/style2.css" />
-    <link rel="stylesheet" href="../Public/css/style6.css" />
-
+  <link rel="stylesheet" href="../Public/css/style6.css" />
 </head>
 <body>
+
 <?php 
 if ($isLoggedIn) {
     include 'navloged.php';
@@ -39,37 +28,41 @@ if ($isLoggedIn) {
 }
 ?>
 
-  <section class="section">
-    <div class="heading">
-      <h1>Available Properties</h1>
-      <div class="line"></div>
-    </div>
+<section class="section">
+  <div class="heading">
+    <h1>Available Properties</h1>
+    <div class="line"></div>
+  </div>
 
-    <div class="grid">
-<?php if ($result && $result->num_rows > 0): ?>
-      <?php while($row = $result->fetch_assoc()): ?>
+  <div class="grid">
+    <?php if ($properties && count($properties) > 0): ?>
+      <?php foreach($properties as $row): ?>
+        <?php
+          $img = !empty($row['image_url'])
+            ? $row['image_url']
+            : "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop";
 
- 
+          $badgeText = "Featured";
+          $badgeClass = "sale"; 
+        ?>
 
         <div class="card">
           <div class="img-box">
-            <img src="<?php echo $row['image_url']; ?>" alt="Property" />
-            <span class="tag tag-blue"><?php echo strtoupper(htmlspecialchars($row['type'])); ?></span>
+            <span class="badge <?php echo $badgeClass; ?>">
+              <?php echo htmlspecialchars($badgeText); ?>
+            </span>
+            <img src="<?php echo htmlspecialchars($img); ?>" alt="Property">
           </div>
-
           <div class="content">
             <div class="price">
               <?php echo number_format((float)$row['price']); ?> BDT
             </div>
-
             <div class="title">
               <?php echo htmlspecialchars($row['title']); ?>
             </div>
-
             <div class="location">
               <?php echo htmlspecialchars($row['location']); ?>
             </div>
-
             <div class="divider"></div>
 
             <div class="stats">
@@ -87,20 +80,16 @@ if ($isLoggedIn) {
               </div>
             </div>
 
-              <a class="btn" href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">View Details</a>
+            <a class="btn" href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">View Details</a>
           </div>
         </div>
 
-      <?php endwhile; ?>
+      <?php endforeach; ?>
     <?php else: ?>
       <p style="padding:20px;">No properties found.</p>
     <?php endif; ?>
+  </div>
+</section>
 
-
-
-
-    </div>
-  </section>
- 
 </body>
 </html>

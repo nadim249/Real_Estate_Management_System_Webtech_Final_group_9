@@ -13,17 +13,8 @@ if(!$isLoggedIn || !$userId){
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-$stmt = $conn->prepare("SELECT user_id, full_name, email, phone FROM buyers WHERE user_id=?");
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$res = $stmt->get_result();
 
-if(!$res || $res->num_rows !== 1){
-  header("Location: dashboard.php");
-  exit;
-}
-$user = $res->fetch_assoc();
-
+$user = $db->getUserProfile($userId);
 $userViews = $db->getUserViews($userId);
 $userTransactions = $db->getUserTransactions($userId);
 ?>

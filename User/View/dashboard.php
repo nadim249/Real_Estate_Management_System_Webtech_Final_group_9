@@ -1,21 +1,12 @@
 <?php
 session_start();
-require_once "../Model/DatabaseConnection.php";
 
-$email = $_SESSION["email"] ?? "";
-$username = $_SESSION["username"] ?? "";
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 
-// DB
-$db = new DatabaseConnection();
-$conn = $db->openConnection();
+require_once "../Model/DatabaseConnection.php";
 
-$sql = "SELECT property_id, title, location, price, type, image_url
-        FROM properties
-        WHERE status = 'Active'
-        ORDER BY property_id DESC
-        LIMIT 4";
-$result = $conn->query($sql);
+$db = new DatabaseConnection();
+$properties = $db->getActiveProperties(); 
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +16,6 @@ $result = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EstateNexus - Home</title>
   <link rel="stylesheet" href="../Public/css/style6.css" />
-  
 </head>
 <body>
 
@@ -42,8 +32,7 @@ else include 'nav.php';
       <input id="q" type="text" placeholder="Search by location, title, type..." />
       <a class="btn-search" id="searchBtn" href="properties.php">Search</a>
     </div>
-    <div id="searchResults" ></div> 
-    </div>
+    <div id="searchResults"></div>
   </div>
 </section>
 
@@ -51,9 +40,8 @@ else include 'nav.php';
   <h2>Featured Properties</h2>
 
   <div class="cards">
-
-    <?php if ($result && $result->num_rows > 0): ?>
-      <?php while($row = $result->fetch_assoc()): ?>
+    <?php if ($properties && count($properties) > 0): ?>
+      <?php foreach($properties as $row): ?>
         <?php
           $img = !empty($row['image_url'])
             ? $row['image_url']
@@ -68,31 +56,22 @@ else include 'nav.php';
             <span class="badge <?php echo $badgeClass; ?>">
               <?php echo htmlspecialchars($badgeText); ?>
             </span>
-
             <img src="<?php echo htmlspecialchars($img); ?>" alt="Property">
           </div>
-
           <div class="p-body">
             <div class="p-price"><?php echo number_format((float)$row['price']); ?> BDT</div>
             <div class="p-title"><?php echo htmlspecialchars($row['title']); ?></div>
             <div class="p-loc"><?php echo htmlspecialchars($row['location']); ?></div>
-
-            <a class="btn-search" style="margin-top:12px; display:inline-block;"
-               href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">
-              View Details
-            </a>
+            <a class="btn-search" style="margin-top:12px; display:inline-block;" href="viewdetails.php?id=<?php echo (int)$row['property_id']; ?>">View Details</a>
           </div>
         </div>
-
-      <?php endwhile; ?>
+      <?php endforeach; ?>
     <?php else: ?>
       <p style="padding: 20px;">No featured properties found.</p>
     <?php endif; ?>
-
   </div>
 </section>
 
-<script src="..\Controller\JS\searchpropertise.js
-"></script>
+<script src="..\Controller\JS\searchpropertise.js"></script>
 </body>
 </html>

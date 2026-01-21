@@ -52,6 +52,19 @@ class DatabaseConnection {
         }
     }
 
+     public function getUserProfile($userId) {
+        $conn = $this->openConnection();
+        $stmt = $conn->prepare("SELECT user_id, full_name, email, phone FROM buyers WHERE user_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result && $result->num_rows === 1) {
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
+
     public function getUserViews($userId) {
     $conn = $this->openConnection();
     $stmt = $conn->prepare("SELECT * FROM viewings WHERE user_id = ?");
@@ -78,5 +91,23 @@ public function getUserTransactions($userId) {
     return $transactions;
 }
 
+ public function getActiveProperties() {
+        $conn = $this->openConnection();
+        $sql = "SELECT property_id, title, location, price, type, num_bedrooms, num_bathrooms, area_sqft, image_url
+                FROM properties
+                WHERE status = 'Active'
+                ORDER BY property_id DESC";
+        
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $properties = [];
+            while ($row = $result->fetch_assoc()) {
+                $properties[] = $row;
+            }
+            return $properties;
+        }
+        return [];
+    }
 }
 ?>
