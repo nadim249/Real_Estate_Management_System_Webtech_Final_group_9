@@ -96,3 +96,20 @@
   font-size: 14px;
 }
 
+.login-actions{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.forgot-link{
+  font-size: 14px;
+  text-decoration: none;
+  color: #000;
+}
+
+.forgot-link:hover{
+  text-decoration: underline;
+}
