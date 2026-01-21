@@ -19,8 +19,9 @@ unset($_SESSION["previousValues"]);
 unset($_SESSION["emailErr"]);
 unset($_SESSION["passwordErr"]);
 unset($_SESSION["signUpErr"]);
-unset($_SESSION["firstNameErr"]);
-unset($_SESSION["lastNameErr"]);
+unset($_SESSION["fullNameErr"]);
+unset($_SESSION["phoneErr"]);
+
 
 ?>
 
@@ -45,26 +46,31 @@ unset($_SESSION["lastNameErr"]);
         <div class="rightpart">
             <h1>Create an Account</h1>
             <hr>
-            <p>Already have an account? <a href="Login.php">Login</a></p>
+            <p>Already have an account? <a href="Login.php" style="color: white;">Login</a></p>
             <br>
             <br>
 <?php if(!empty($signUpErr)) echo "<p>$signUpErr</p>"; ?>
 
        <form action="../CONTROLLER/SignUpValidation.php" method="POST">
-  <input type="text" name="first_name" placeholder="First Name" >
-  <?php if(!empty($firstNameErr)) echo "<p>$firstNameErr</p>"; ?>
 
-  <input type="text" name="last_name" placeholder="Last Name" >
-    <?php if(!empty($lastNameErr)) echo "<p>$lastNameErr</p>"; ?>
-  <input type="email" name="email" placeholder="Email" >
-    <?php if(!empty($emailErr)) echo "<p>$emailErr</p>"; ?>
-  <input type="password" name="password" placeholder="Password" >
-    <?php if(!empty($passwordErr)) echo "<p>$passwordErr</p>"; ?>
-            <br>
-            <br>
-            <br>
-            
-                  <button type="submit" name="signup">Create Account</button>
+  <input type="text" name="full_name" placeholder="Full Name"
+         value="<?= htmlspecialchars($previousValues['full_name'] ?? '') ?>">
+  <?php if(!empty($fullNameErr)) echo "<p class='error-msg'>$fullNameErr</p>"; ?>
+
+  <input type="text" name="phone" placeholder="Phone"
+         value="<?= htmlspecialchars($previousValues['phone'] ?? '') ?>">
+  <?php if(!empty($phoneErr)) echo "<p class='error-msg'>$phoneErr</p>"; ?>
+
+  <input type="email" name="email" placeholder="Email"
+         value="<?= htmlspecialchars($previousValues['email'] ?? '') ?>">
+  <?php if(!empty($emailErr)) echo "<p class='error-msg'>$emailErr</p>"; ?>
+
+  <input type="password" name="password" placeholder="Password">
+  <?php if(!empty($passwordErr)) echo "<p class='error-msg'>$passwordErr</p>"; ?>
+
+  <?php if(!empty($signUpErr)) echo "<p class='error-msg'>$signUpErr</p>"; ?>
+
+  <button type="submit" name="signup">Create Account</button>
 </form>
 
         
