@@ -42,21 +42,6 @@ class DatabaseConnection
 
 
 
-    //User model Query
-
-
-    //agent model query
-
-
-    //Approvals
-  
-
-    //properties 
-
-
-    //transactions
-
-
 
     //Dashboard
         function getRecentProperties($connection, $limit = 5)

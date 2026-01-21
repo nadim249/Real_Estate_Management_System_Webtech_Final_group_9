@@ -15,7 +15,7 @@ $conn = $db->openConnection();
 $sql = "UPDATE transactions SET status='Completed' WHERE transaction_id = $transactionId";
 
 if ($conn->query($sql)) {
-    header("Location: ../View/transactions.php?msg=approved");
+    header("Location: ../View/AdminDash/transactions.php?msg=approved");
 } else {
     echo "Approve failed!";
 }

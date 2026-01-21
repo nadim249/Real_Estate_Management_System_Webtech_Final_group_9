@@ -73,7 +73,7 @@ include_once "../../Controller/transactionsController.php";
                                 <td>
                                     <a href="Edit/editTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="edit-btn">Edit</a>
 
-                                    <a href="../../Controller/deleteTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="delete-btn">Delete</a>
+                                    <a href="../../Controller/Deletes/deleteTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="delete-btn">Delete</a>
                                     <?php if ($row['status'] !== 'Completed'): ?>
 
                                         <a href="../../Controller/approveTransaction.php?id=<?php echo $row['transaction_id']; ?>" class="approve-btn">Approve</a>

@@ -23,4 +23,24 @@ class TransactoionModel
         ";
         return $this->conn->query($sql);
     }
+
+        public function deleteTransaction($transactionId)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM transactions WHERE transaction_id = ?");
+        $stmt->bind_param("i", $transactionId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+
+    public function exists($transactionId)
+    {
+        $stmt = $this->conn->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?");
+        $stmt->bind_param("i", $transactionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $exists = $result->num_rows > 0;
+        $stmt->close();
+        return $exists;
+    }
 }
