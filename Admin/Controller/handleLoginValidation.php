@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "../Model/DatabaseConnection.php";
 
 session_start();
@@ -9,50 +9,50 @@ $password = $_REQUEST["password"];
 $errors = [];
 $values = [];
 
-if(!$email){
+if (!$email) {
     $errors["email"] = "Email is a required field";
 }
-if(!$password){
+if (!$password) {
     $errors["password"] = "Password field is required";
 }
 
-if(count($errors) > 0){
-    if($errors["email"] != ""){
+if (count($errors) > 0) {
+    if ($errors["email"] != "") {
         $_SESSION["emailErr"] = $errors["email"];
-    }else{
+    } else {
         unset($_SESSION["emailErr"]);
     }
-    if($errors["password"] != ""){
+    if ($errors["password"] != "") {
         $_SESSION["passwordErr"] = $errors["password"];
-    }else{
+    } else {
         unset($_SESSION["passwordErr"]);
     }
-$values["email"] = $email;
+    $values["email"] = $email;
 
-$_SESSION["previousValues"] = $values;
+    $_SESSION["previousValues"] = $values;
 
-Header("Location: ../View/Auth/login.php");
-
-}else{
+    Header("Location: ../View/Auth/login.php");
+} else {
     $db = new DatabaseConnection();
     $connection = $db->openConnection();
     $result = $db->signin($connection, "admins", $email, $password);
-    if($result->num_rows > 0){
+    if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        $_SESSION["admin_id"]=$user['admin_id'];
+        $_SESSION["admin_id"] = $user['admin_id'];
         $_SESSION["email"] = $email;
         $_SESSION["isLoggedIn"] = true;
         $_SESSION["username"] = $user['username'];
-        
-         Header("Location: ../View/AdminDash/dashboard.php");
-    }else{
+
+            if (isset($_POST['remember'])) {
+        setcookie("email", $email, time() + 7*24*60*60, "/");
+    } else {
+        setcookie("email", "", time() - 3600, "/");
+    }
+
+        Header("Location: ../View/AdminDash/dashboard.php");
+        exit();
+    } else {
         $_SESSION["loginErr"] = "Email or password is invalid";
         Header("Location: ../View/Auth/login.php");
     }
-    
 }
-
-
-
-
-?>

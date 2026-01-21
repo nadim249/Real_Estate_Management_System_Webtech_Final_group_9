@@ -23,11 +23,10 @@ $sql = "UPDATE agents
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sssdi", $fullName, $email, $phone, $commission_rate, $agentId);
 
-if($stmt->execute()){
+if ($stmt->execute()) {
     header("Location: ../../View/AdminDash/agents.php?msg=updated");
 } else {
     echo "Update failed!";
-
 }
 $stmt->close();
 $conn->close();

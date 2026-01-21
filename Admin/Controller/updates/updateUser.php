@@ -25,7 +25,6 @@ if (!empty($password)) {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssi", $fullName, $email, $phone, $password, $userId);
-
 } else {
 
     // Update WITHOUT password

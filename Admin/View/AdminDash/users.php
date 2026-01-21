@@ -1,103 +1,95 @@
 <?php
-session_start();
-
-$isLoggedIn= $_SESSION["isLoggedIn"] ?? false;
-if(!$isLoggedIn){
-    Header("Location: login.php");
-}
-$email = $_SESSION["email"] ??"";
-$username = $_SESSION["username"] ??"";
-
-include "../../Model/DatabaseConnection.php";
-$db = new DatabaseConnection();
-$connection = $db->openConnection();
-
-$buyersQuery = "SELECT * FROM buyers ORDER BY created_at ASC";
-$buyersResult = $connection->query($buyersQuery);
-
+include_once "../../Controller/usersController.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Users | EstateMgr</title>
     <link rel="stylesheet" href="../../Public/CSS/styles.css">
-            <link rel="stylesheet" href="../../Public/CSS/propertise.css">
+    <link rel="stylesheet" href="../../Public/CSS/propertise.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body id="page-users">
-        <?php
-$currentPage = basename($_SERVER['PHP_SELF']);
-?>
-   <?php include '../includes/sidebar.php'; ?>
+    <?php
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    ?>
+    <?php include '../includes/sidebar.php'; ?>
 
     <main class="main-content">
-        <header><div class="header-title"><h1>Registered Users</h1></div>
-                        <div class="user-wrapper">
-                    <i class="fa-duotone fa-solid fa-user user-img"></i>
-    <div>
-        <h4><?php echo htmlspecialchars($username); ?>
-        <a href="Edit/editProfile.php" class="edit-profile-btn">
-        <i class="fa-solid fa-pen"></i>
-        </a>
-        </h4>
-        <small><?php echo htmlspecialchars($email); ?></small>
-    </div>
+        <header>
+            <div class="header-title">
+                <h1>Registered Users</h1>
+            </div>
+            <div class="user-wrapper">
+                <i class="fa-duotone fa-solid fa-user user-img"></i>
+                <div>
+                    <h4><?php echo htmlspecialchars($username); ?>
+                        <a href="Edit/editProfile.php" class="edit-profile-btn">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    </h4>
+                    <small><?php echo htmlspecialchars($email); ?></small>
                 </div>
-    </header>
-<div class="table-responsive">
-    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'updated'): ?>
-    <p style="color: green;">User updated successfully!</p>
-    <?php endif; ?>
+            </div>
+        </header>
+        <div class="table-responsive">
+            <?php if (isset($_GET['msg']) && $_GET['msg'] == 'updated'): ?>
+                <p style="color: green;">User updated successfully!</p>
+            <?php endif; ?>
 
-    <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
-    <p style="color: green;">User deleted successfully!</p>
-<?php endif; ?>
+            <?php if (isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
+                <p style="color: green;">User deleted successfully!</p>
+            <?php endif; ?>
 
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search..." />
-        </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search..." />
+            </div>
 
-    <table>
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Full Name</td>
-                <td>Email</td>
-                <td>Phone</td>
-                <td>Created At</td>
-                <td>Actions</td>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <?php
-            if($buyersResult->num_rows > 0){
-                while($row = $buyersResult->fetch_assoc()){
-                    ?>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo $row['user_id']; ?></td>
-                        <td><?php echo $row['full_name']; ?></td>
-                        <td><?php echo $row['email']; ?></td>
-                        <td><?php echo $row['phone']; ?></td>
-                        <td><?php echo $row['created_at']; ?></td>
-                        <td>
-                        <a href="Edit/editUser.php?id=<?php echo $row['user_id']; ?>" class="edit-btn">Edit</a>
-                        <a href="../../Controller/Deletes/deleteUser.php?id=<?php echo $row['user_id']; ?>"class="delete-btn"
-       onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                        </td>
+                        <td>ID</td>
+                        <td>Full Name</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                        <td>Created At</td>
+                        <td>Actions</td>
                     </tr>
+                </thead>
+                <tbody id="tableBody">
                     <?php
-                }
-            } else {
-                echo '<tr><td colspan="6">No agents found.</td></tr>';
-            }
-            ?>
-        </tbody>
-    </table>
+                    if ($buyersResult->num_rows > 0) {
+                        while ($row = $buyersResult->fetch_assoc()) {
+                    ?>
+                            <tr>
+                                <td><?php echo $row['user_id']; ?></td>
+                                <td><?php echo $row['full_name']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['phone']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                                <td>
+                                    <a href="Edit/editUser.php?id=<?php echo $row['user_id']; ?>" class="edit-btn">Edit</a>
+                                    <a href="../../Controller/Deletes/deleteUser.php?id=<?php echo $row['user_id']; ?>" class="delete-btn"
+                                        onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                </td>
+                            </tr>
+                    <?php
+                        }
+                    } else {
+                        echo '<tr><td colspan="6">No agents found.</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
     </main>
 
     <script src="../../Controller/JS/searchuser.js"></script>
 
 </body>
+
 </html>

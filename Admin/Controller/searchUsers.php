@@ -1,12 +1,11 @@
 <?php
 include "../Model/DatabaseConnection.php";
 
-// Sanitize input (also using prepared statements below)
 $search = $_POST['query'] ?? '';
 
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
-// Use prepared statements to avoid SQL injection
+
 $sql = "SELECT user_id, full_name, email, phone, created_at
         FROM buyers
         WHERE full_name LIKE ? OR email LIKE ? OR phone LIKE ?";

@@ -1,21 +1,30 @@
 <?php
 session_start();
 require_once "../../Model/DatabaseConnection.php";
-
+require_once "../../Model/usermodel.php";
 if (!isset($_GET['id'])) {
     header("Location: ../../View/AdminDash/users.php");
     exit;
 }
 
 $userId = intval($_GET['id']);
-
 $db = new DatabaseConnection();
 $conn = $db->openConnection();
 
-$sql = "DELETE FROM buyers WHERE user_id = $userId";
+$userModel = new UserModel($conn);
 
-if ($conn->query($sql)) {
+if (!$userModel->exists($userId)) {
+    $_SESSION['userDeleteErr'] = "User not found!";
+    header("Location: ../../View/AdminDash/users.php");
+    exit;
+}
+
+if ($userModel->deleteUser($userId)) {
     header("Location: ../../View/AdminDash/users.php?msg=deleted");
 } else {
-    echo "Delete failed!";
+    $_SESSION['userDeleteErr'] = "Delete failed!";
+    header("Location: ../../View/AdminDash/users.php");
 }
+
+$conn->close();
+exit;
