@@ -1,78 +1,38 @@
--<!DOCTYPE html>
+<?php 
+session_start();
+
+$successMsg = $_SESSION["successMsg"] ?? "";
+unset($_SESSION["successMsg"]);
+
+
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+if($isLoggedIn){
+    Header("Location: dashboard.php");
+}
+$emailErr = $_SESSION["emailErr"] ?? "";
+$passwordErr = $_SESSION["passwordErr"] ?? "";
+$loginErr = $_SESSION["loginErr"] ?? "";
+
+$previousValues = $_SESSION["previousValues"] ?? [];
+
+unset($_SESSION["previousValues"]);
+unset($_SESSION["emailErr"]);
+unset($_SESSION["passwordErr"]);
+unset($_SESSION["loginErr"]);
+
+
+
+?>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-        
-        .image {
-            width: 50%;
-        }
-
-        .image img {
-            width: 100%;
-            height: 100%;
-            object-fit:fill;
-            
-        }
-
-      
-        .login {
-            width: 50%;
-            display: flex;
-            flex-direction: column;   
-            align-items: center;
-            padding-top: 30px;       
-        }
-
-        
-        .login h1 {
-            margin: 0 0 20px 0;       
-        }
-
-       
-        .box {
-            width: 250px;
-            text-align: auto;
-            margin-top:50px;
-        }
-
-        .box h2 {
-            margin-bottom: 15px;
-        }
-
-        input {
-          width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-        }
-
-        button {
-            width: 100px;
-            padding: 8px;
-            margin-top: 10px;
-            font-size: 14px;
-            background-color: rgb(0 0 0);
-            color: black;
-            border-radius: 10px;
-            
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="../Public/CSS/styleLogin.css">
 </head>
 
 <body>
@@ -80,7 +40,7 @@
     <div class="container">
 
         <div class="image">
-            <img src="Image/homeImg.jpg" alt="Image">
+            <img src="Images/homeImg.jpg" alt="Image">
         </div>
 
         <div class="login">
@@ -90,19 +50,30 @@
             
             <div class="box">
                 <h2>Login</h2>
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <button>Login</button>
-                <a href=""></a>Forget Password?
+                <?php if(!empty($loginErr)) echo "<p class='error-msg'>$loginErr</p>"; ?>
+
+
+               <form action="../CONTROLLER/LoginValidation.php" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <div class="login-actions">
+  <button type="submit">Login</button>
+<a href="ForgetPassword.php" class="forgot-link">Forget Password?</a>
+
+</div>
+</form>
+
                 <br>
-                <br>
-                <br>
+                
 
                 <p style="margin-top: 10px;font-size:14px;">
                     New here?
                     <a href="Signup.php" >
                   <button>Sign up</button>
+
                     </a>
+                      <?php if(!empty($successMsg)) echo "<p class='success-msg'>$successMsg</p>"; ?>
+
                 </p>
             </div>
         </div>

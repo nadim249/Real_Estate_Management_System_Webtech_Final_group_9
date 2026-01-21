@@ -1,3 +1,29 @@
+<?php 
+session_start();
+
+$isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
+if($isLoggedIn){
+    Header("Location: dashboard.php");
+}
+$emailErr = $_SESSION["emailErr"] ?? "";
+$passwordErr = $_SESSION["passwordErr"] ?? "";
+$signUpErr = $_SESSION["signUpErr"] ?? "";
+$firstNameErr = $_SESSION["firstNameErr"] ?? "";
+$lastNameErr  = $_SESSION["lastNameErr"] ?? "";
+
+
+$previousValues = $_SESSION["previousValues"] ?? [];
+
+
+unset($_SESSION["previousValues"]);
+unset($_SESSION["emailErr"]);
+unset($_SESSION["passwordErr"]);
+unset($_SESSION["signUpErr"]);
+unset($_SESSION["firstNameErr"]);
+unset($_SESSION["lastNameErr"]);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,67 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
 
-    <style>
-        body
-        {
-            margin:0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-
-        }
-
-        
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-     
-        .left {
-            width: 50%;
-        }
-
-        .left img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-       
-        .rightpart {
-            width: 50%;
-            padding: 40px;
-            align-items: center;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 50%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-        }
-
-       button {
-    width: 150px;
-    padding: 8px;
-    margin: 10px auto;   
-    font-size: 14px;
-    background-color: rgb(0 0 0);
-    color: white;
-    border-radius: 20px;
-    display: block;
-}
-
-    </style>
+    <link rel="stylesheet" href="../Public/CSS/styleSign.css">
 </head>
 <body>
     
@@ -73,7 +39,7 @@
 
       
         <div class="left">
-            <img src="Image/homeImg.jpg" alt="Image">
+            <img src="Images/homeImg.jpg" alt="Image">
         </div>
 
         <div class="rightpart">
@@ -82,17 +48,27 @@
             <p>Already have an account? <a href="Login.php">Login</a></p>
             <br>
             <br>
+<?php if(!empty($signUpErr)) echo "<p>$signUpErr</p>"; ?>
 
-            <input type="text" placeholder="First Name">
-            <input type="text" placeholder="Last Name">
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
+       <form action="../CONTROLLER/SignUpValidation.php" method="POST">
+  <input type="text" name="first_name" placeholder="First Name" >
+  <?php if(!empty($firstNameErr)) echo "<p>$firstNameErr</p>"; ?>
+
+  <input type="text" name="last_name" placeholder="Last Name" >
+    <?php if(!empty($lastNameErr)) echo "<p>$lastNameErr</p>"; ?>
+  <input type="email" name="email" placeholder="Email" >
+    <?php if(!empty($emailErr)) echo "<p>$emailErr</p>"; ?>
+  <input type="password" name="password" placeholder="Password" >
+    <?php if(!empty($passwordErr)) echo "<p>$passwordErr</p>"; ?>
+            <br>
+            <br>
+            <br>
+            
+                  <button type="submit" name="signup">Create Account</button>
+</form>
+
         
-            <br>
-            <br>
-            <br>
-            <br>
-            <button>Create Account</button>
+           
         </div>
 
     </div>

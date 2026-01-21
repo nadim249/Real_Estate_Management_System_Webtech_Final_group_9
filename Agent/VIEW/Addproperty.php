@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,69 +7,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <style>
-        .layout
-        {
-            display: flex;
-            height: 100vh;
-        }
-
-        .sidebar{
-            width: 220px;
-            background: rgb(0, 0, 0);
-            color:rgb(255, 255, 255);
-            padding:20px;
-            position:fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
 
 
-        }
-        .sidebar a 
-        {
-    display: block;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    margin: 60px 0;
-    border-radius: 5px;
-    font-family: serif;
-    font-size: 20px;
-        }
-    .sidebar a:hover 
-    {
-      background: #333;
-    }
-    
-    .gap
-    {
-        margin: 80px;
-    }
-      
-
-        </style>
-
-
+    <link rel="stylesheet" href="../Public/CSS/styleDash.css">
 </head>
+
 <body>
 
     <div class="layout">
-      
-    <div class="sidebar">
-          <h2> Estate-Us</h2>
-          <hr>
-          <div class="gap">
+        <div class="sidebar">
+             <h2 style="font-size: 40px;"> Estate-Us</h2>
+            <hr>
 
-          </div>
-      <a href="#">Dashboard</a>
-      <a href="#">My Properties</a>
-      <a href="#">Inquiries</a>
-      <a href="#">Add Property</a>
+            <div class="gap"></div>
+  <a href="Dashboard.php"><img src="images/dashboard.png" class="sb-icon" alt="Dashboard">Dashboard</a>
+      <a href="Properties.php"><img src="images/Myprop.png" class="sb-icon" alt="My Properties">My Properties</a>
+      <a href="Inquiries.php"><img src="images/inq.png" class="sb-icon" alt="Inquiries">Inquiries</a>
+      <a href="AddProperty.php" class="active"><img src="images/addproperties.png" class="sb-icon" alt="Add Property">Add Property</a>
+        </div>
+<div class="main-content">
+    <h1>Add Property</h1>
+    <p>Add a new property listing.</p>
+
+    <div class="container">
+      <form action="../CONTROLLER/addMyProperty.php" method="POST" class="add-form">
+
+  <label>Title</label>
+  <input type="text" name="title" required>
+
+  <label>Description</label>
+  <textarea name="description" rows="4"></textarea>
+
+  <label>Type</label>
+  <select name="type" required>
+    <option value="Apartment">Apartment</option>
+    <option value="House">House</option>
+    <option value="Commercial">Commercial</option>
+    <option value="Land">Land</option>
+  </select>
+
+  <label>Location</label>
+  <input type="text" name="location" required>
+
+  <label>Price</label>
+  <input type="number" name="price" step="0.01" min="0" required>
+
+  <label>Area (sqft)</label>
+  <input type="number" name="area_sqft" min="0" required>
+
+  <label>Bedrooms</label>
+  <input type="number" name="num_bedrooms" min="0">
+
+  <label>Bathrooms</label>
+  <input type="number" name="num_bathrooms" min="0">
+
+  <label>Image URL</label>
+  <input type="text" name="image_url" placeholder="uploads/example.jpg">
+
+  <button type="submit" name="add_property">Add Property</button>
+</form>
+
+    </div>
+
+  </div>
+
+        
     </div>
 
 
-
-    </div>
-    
 </body>
 </html>
