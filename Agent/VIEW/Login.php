@@ -54,8 +54,8 @@ unset($_SESSION["loginErr"]);
 
 
                <form action="../CONTROLLER/LoginValidation.php" method="POST">
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="email" name="email" placeholder="Email" >
+                <input type="password" name="password" placeholder="Password" >
                 <div class="login-actions">
   <button type="submit">Login</button>
 <a href="ForgetPassword.php" class="forgot-link">Forget Password?</a>
