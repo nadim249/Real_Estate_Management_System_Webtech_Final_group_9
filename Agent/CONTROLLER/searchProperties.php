@@ -15,21 +15,21 @@ $sql = "SELECT property_id, title, type, location, price, area_sqft, num_bedroom
 $params = [];
 $typesStr = "";
 
-// title search
+
 if ($q !== "") {
     $sql .= " AND title LIKE ?";
     $params[] = "%".$q."%";
     $typesStr .= "s";
 }
 
-// status filter
+
 if ($status !== "") {
     $sql .= " AND status = ?";
     $params[] = $status;
     $typesStr .= "s";
 }
 
-// type filter
+
 if ($type !== "") {
     $sql .= " AND type = ?";
     $params[] = $type;
