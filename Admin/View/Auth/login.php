@@ -3,7 +3,7 @@ session_start();
 
 $isLoggedIn = $_SESSION["isLoggedIn"] ?? false;
 if ($isLoggedIn) {
-    Header("Location: dashboard.php");
+    Header("Location: ../AdminDash/dashboard.php");
 }
 $emailErr = $_SESSION["emailErr"] ?? "";
 $passwordErr = $_SESSION["passwordErr"] ?? "";

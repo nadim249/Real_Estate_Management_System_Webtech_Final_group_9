@@ -25,14 +25,26 @@ class AgentModel
 
         return $result->num_rows > 0;
     }
+
 public function deleteAgent($agentId)
 {
+    $tables = ['properties', 'inquiries', 'transactions','viewings'];
+
+    foreach ($tables as $table) {
+        $stmt = $this->conn->prepare(
+            "UPDATE $table SET agent_id = NULL WHERE agent_id = ?"
+        );
+        $stmt->bind_param("i", $agentId);
+        $stmt->execute();
+    }
+
     $stmt = $this->conn->prepare(
         "DELETE FROM agents WHERE agent_id = ?"
     );
     $stmt->bind_param("i", $agentId);
     return $stmt->execute();
 }
+
 
 
 }
