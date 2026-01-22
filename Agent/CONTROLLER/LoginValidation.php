@@ -37,7 +37,7 @@ Header("Location: ../View/Login.php");
 }else{
     $db = new DatabaseConn();
     $connection = $db->openConnection();
-    $result = $db->signin($connection, "users", $email, $password);
+    $result = $db->signin($connection, "agents", $email, $password);
     if($result->num_rows > 0){
      $_SESSION["email"] = $email;
 $_SESSION["isLoggedIn"] = true;

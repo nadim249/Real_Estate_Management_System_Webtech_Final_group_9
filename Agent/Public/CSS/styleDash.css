@@ -195,3 +195,11 @@ td {
   padding:8px 10px;
   border-radius:6px;
 }
+/* inquery */
+.inq-box{
+  background: white;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}

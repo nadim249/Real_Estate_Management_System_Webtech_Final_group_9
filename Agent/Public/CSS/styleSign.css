@@ -12,6 +12,7 @@ body
         .container {
             display: flex;
             height: 100vh;
+            
         }
 
      
@@ -31,6 +32,11 @@ body
             padding: 40px;
             align-items: center;
             text-align: center;
+             background: rgb(62, 57, 66);
+
+           
+
+            
         }
 
         h1 {

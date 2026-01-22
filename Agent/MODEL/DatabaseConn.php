@@ -43,6 +43,24 @@ class DatabaseConn{
         return $result;
     
     }
+    
+
+
+function checkExistingAgentEmail($connection, $email){
+    $sql = "SELECT agent_id FROM agents WHERE email = ?";
+    $stmt = $connection->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
+
+function signUpAgent($connection, $full_name, $email, $phone, $password){
+    $sql = "INSERT INTO agents (full_name, email, phone, password) VALUES (?, ?, ?, ?)";
+    $stmt = $connection->prepare($sql);
+    $stmt->bind_param("ssss", $full_name, $email, $phone, $password);
+    return $stmt->execute();
+}
 
     function closeConnection($connection){
         $connection->close();
