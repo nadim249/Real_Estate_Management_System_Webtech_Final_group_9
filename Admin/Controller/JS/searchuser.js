@@ -4,7 +4,6 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
     const query = this.value;
 
     const xhr = new XMLHttpRequest();
-    // Path is relative to the page URL (users.php in View/AdminDash)
     xhr.open("POST", "../../Controller/searchUsers.php", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 

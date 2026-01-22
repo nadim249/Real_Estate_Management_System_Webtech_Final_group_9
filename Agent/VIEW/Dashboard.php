@@ -9,19 +9,17 @@ $conn = $db->openConnection();
 
 
 $activeListings = $conn->query(
-    "SELECT COUNT(*) AS total FROM my_properties WHERE status='Active'"
+    "SELECT COUNT(*) AS total FROM properties WHERE status='Active'"
 )->fetch_assoc()['total'];
 
 
-$totalViews = $conn->query(
-    "SELECT SUM(views) AS total FROM my_properties"
-)->fetch_assoc()['total'];
+
 
 
 
 
 $listings = $conn->query(
-    "SELECT property_name, price, type, views, status FROM my_properties ORDER BY created_at DESC LIMIT 5"
+    "SELECT title, price, type, status,price FROM properties ORDER BY created_at DESC LIMIT 5"
 );
 
 ?>
@@ -70,10 +68,7 @@ $listings = $conn->query(
 
            
 
-            <div class="card">
-                <h3> Total Views</h3>
-                <p><?= $totalViews ?></p>
-            </div>
+   
          
         </div>
          <h2>Recent Listing Performance</h2>
@@ -84,17 +79,15 @@ $listings = $conn->query(
                     <th>Property</th>
                     <th>Price</th>
                     <th>Type</th>
-                    <th>Views</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $listings->fetch_assoc()): ?>
                 <tr>
-                    <td><?= $row['property_name'] ?></td>
+                    <td><?= $row['title'] ?></td>
                     <td><?= $row['price'] ?></td>
                     <td><?= $row['type'] ?></td>
-                    <td><?= $row['views'] ?></td>
                     <td><?= $row['status'] ?></td>
                 </tr>
                 <?php endwhile; ?>

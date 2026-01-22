@@ -1,4 +1,3 @@
-// controller/js/search.js
 
 document.addEventListener('DOMContentLoaded', function () {
   const q = document.getElementById('q');
