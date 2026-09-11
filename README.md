@@ -30,8 +30,8 @@ This Real Estate Management System is built to streamline property listings, age
 
 ## Tech Stack
 
-- **Backend**: PHP (79%)
-- **Frontend**: CSS (16%), JavaScript (2%)
+- **Backend**: PHP
+- **Frontend**: CSS, JavaScript
 - **Version Control**: Git
 
 ## Project Structure
